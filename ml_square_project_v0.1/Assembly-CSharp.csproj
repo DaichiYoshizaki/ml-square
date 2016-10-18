@@ -45,9 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\00_Logo\SceneChange_Logo.cs" />
+     <Compile Include="Assets\Scripts\01_Title\SceneChange_Title.cs" />
      <Compile Include="Assets\Scripts\03_Game\gamePlayer\playerMover.cs" />
+     <Compile Include="Assets\Scripts\03_Game\gameStage\gameStage.cs" />
+     <Compile Include="Assets\Scripts\03_Game\gameStage\getAllStage.cs" />
      <Compile Include="Assets\Scripts\03_Game\jumpButton\jumpButton.cs" />
      <Compile Include="Assets\Scripts\03_Game\toggleFaceButton\toggleFaceButton.cs" />
+     <Compile Include="Assets\Scripts\Fade.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
