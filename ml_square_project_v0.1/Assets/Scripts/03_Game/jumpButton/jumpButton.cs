@@ -21,6 +21,7 @@ public class jumpButton : MonoBehaviour {
 		}
 		jumpPower = 0f;
 		playerMover.IsAbleToMove = true;
+		playerMover.IsAbleToJump = false;
 	}
 	void Start(){
 		playerMover = player.GetComponent<playerMover> ();
@@ -28,7 +29,7 @@ public class jumpButton : MonoBehaviour {
 
 	void Update(){
 		if(push){
-			jumpPower += 0.1f;
+			jumpPower += 1f;
 		}
 	}
 }
