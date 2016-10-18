@@ -9,16 +9,18 @@ public class jumpButton : MonoBehaviour {
 
 	public void PushDown(){
 		push = true;
+		playerMover.IsAbleToMove = false;
 	}
 
 	public void PushUp(){
 		push = false;
 		if (jumpPower > 10f) {
-			playerMover.jump (jumpPower);
+			playerMover.jump (1000f);
 		} else {			
-			playerMover.jump (jumpPower * 0.5f);
+			playerMover.jump (500f);
 		}
 		jumpPower = 0f;
+		playerMover.IsAbleToMove = true;
 	}
 	void Start(){
 		playerMover = player.GetComponent<playerMover> ();

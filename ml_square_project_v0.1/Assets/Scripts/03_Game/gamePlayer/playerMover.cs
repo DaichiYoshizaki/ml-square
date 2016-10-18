@@ -4,26 +4,24 @@ using System.Collections.Generic;
 
 public class playerMover : MonoBehaviour {
 	private bool isFacingRight = true;
-	private bool isAbleToJump;
+	private bool isAbleToJump = true;
 	private float walkSpeed = 5.5f;
-	private bool isAbleToMove;
+	private bool isAbleToMove = true;
 	private Rigidbody2D rb2d;
 	private SpriteRenderer playerSprite;
 	public List<Sprite> SpriteList;
 
 	//プレイヤーのジャンプ
 	public void jump(float jumpPower){
-		GetComponent<Rigidbody2D> ().AddForce (new Vector3(0f, jumpPower, 0f));
+		GetComponent<Rigidbody2D> ().AddForce (Vector3.up * jumpPower * 10f);
 	}
 
 	//プレイヤーの方向変換
 	public void changeFace(){
 		if (isFacingRight) {
 			isFacingRight = false;
-			playerSprite.sprite = SpriteList [1];
 		} else {
 			isFacingRight = true;
-			playerSprite.sprite = SpriteList [0];
 		}
 	}
 
@@ -51,10 +49,21 @@ public class playerMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isFacingRight) {
-			rb2d.velocity = Vector3.right * walkSpeed;
+		if (isAbleToMove) {
+			if (isFacingRight) {
+				rb2d.velocity = Vector3.right * walkSpeed;
+				playerSprite.sprite = SpriteList [0];
+			} else {
+				rb2d.velocity = Vector3.right * -walkSpeed;
+				playerSprite.sprite = SpriteList [1];
+			}
 		} else {
-			rb2d.velocity = Vector3.right * -walkSpeed;
+			rb2d.velocity = Vector3.right * 0f;
+			if (isFacingRight) {
+				playerSprite.sprite = SpriteList [2];
+			} else {
+				playerSprite.sprite = SpriteList [3];
+			}
 		}
 	}
 }
