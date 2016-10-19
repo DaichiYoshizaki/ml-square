@@ -129,7 +129,6 @@ public class playerMover : MonoBehaviour {
 			}
 		}
 		playerSprite.color = col;
-		Debug.Log (col);
 	}
 	public void OnTriggerEnter2D(Collider2D col){
 		if(col.CompareTag("item")){
