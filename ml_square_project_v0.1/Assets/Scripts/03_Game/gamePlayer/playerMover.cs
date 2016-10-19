@@ -12,7 +12,6 @@ public class playerMover : MonoBehaviour {
 	public List<Sprite> SpriteList;
 	public LayerMask groundLayer;
 	public LayerMask wallLayer;
-	private float currentJumpPower;
 
 	private bool IsGrounded(){
 		bool isGround;
@@ -84,7 +83,6 @@ public class playerMover : MonoBehaviour {
 
 		if (IsGrounded ()) {
 			isAbleToJump = true;
-			currentJumpPower = 0f;
 			Debug.Log (isAbleToJump);
 		}
 
