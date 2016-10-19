@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class playerMover : MonoBehaviour {
 	private bool isFacingRight = true;
 	public bool isAbleToJump = false;
-	private float walkSpeed = 5.5f;
+	public float walkSpeed = 0.1f;
 	private bool isAbleToMove = true;
 	private Rigidbody2D rb2d;
 	private SpriteRenderer playerSprite;
@@ -33,7 +33,7 @@ public class playerMover : MonoBehaviour {
 	//プレイヤーのジャンプ
 	public void jump(float jumpPower){
 		if (isAbleToJump) {
-			currentJumpPower += jumpPower;
+			rb2d.AddForce (Vector2.up * jumpPower);
 			isAbleToJump = false;
 
 		}
@@ -98,10 +98,12 @@ public class playerMover : MonoBehaviour {
 		if (isAbleToMove) {
 			//右左でスプライトの変更
 			if (isFacingRight) {
-				rb2d.velocity = Vector2.right * walkSpeed;
+				//rb2d.velocity = Vector2.right * walkSpeed * Time.deltaTime;
+				transform.Translate(Vector2.right * walkSpeed);
 				playerSprite.sprite = SpriteList [0];
 			} else {
-				rb2d.velocity = Vector2.right * -walkSpeed;
+				//rb2d.velocity = Vector2.right * -walkSpeed * Time.deltaTime;
+				transform.Translate(Vector2.right * -walkSpeed);
 				playerSprite.sprite = SpriteList [1];
 			}
 			//左右でスプライトの
