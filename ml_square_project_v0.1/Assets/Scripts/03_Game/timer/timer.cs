@@ -7,6 +7,11 @@ public class timer : MonoBehaviour {
 	private Text text;
 	private float countTime;
 
+	public float CountTime{
+		get{ return countTime;}
+		set{ countTime = value;}
+	}
+
 	// Use this for initialization
 	void Start () {
 		countTime = 15f;
@@ -14,9 +19,9 @@ public class timer : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		countTime -= Time.deltaTime; //スタートしてからの秒数を格納
 		text.text = countTime.ToString("00"); //小数2桁にして表示
-		if(countTime <= 0){}
+		if(countTime < 0) countTime = 15;
 	}
 }

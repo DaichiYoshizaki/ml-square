@@ -2438,11 +2438,11 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1986334076}
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 4.5570893
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 25
+  m_GravityScale: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -2456,10 +2456,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1986334076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8daaba58a8d4b3a86578ea25740dcf, type: 3}
+  m_Script: {fileID: 11500000, guid: b3734ab91888d47eea6b2c738f62d0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAbleToJump: 0
+  walkSpeed: 0.1
   SpriteList:
   - {fileID: 21300000, guid: c52ba80b4a60745d8995487f478c9f28, type: 3}
   - {fileID: 21300000, guid: 5485c928b292c438bb3c9d510e6f7c37, type: 3}
@@ -2470,7 +2471,7 @@ MonoBehaviour:
     m_Bits: 256
   wallLayer:
     serializedVersion: 2
-    m_Bits: 528
+    m_Bits: 512
 --- !u!1 &2017447645
 GameObject:
   m_ObjectHideFlags: 0
