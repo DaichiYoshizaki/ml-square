@@ -17,7 +17,7 @@ public class jumpButton : MonoBehaviour {
 	public void PushUp(){
 		if (playerMover.IsAbleToJump && push) {
 			push = false;
-			if (jumpPower > 10f) {
+			if (jumpPower > 30f) {
 				playerMover.jump (2500f);
 			} else {			
 				playerMover.jump (1700f);
@@ -25,6 +25,7 @@ public class jumpButton : MonoBehaviour {
 			jumpPower = 0f;
 			playerMover.IsAbleToMove = true;
 			playerMover.IsAbleToJump = false;
+			playerMover.IsHighJump = false;
 		}
 	}
 	void Start(){
@@ -34,6 +35,9 @@ public class jumpButton : MonoBehaviour {
 	void Update(){
 		if(push){
 			jumpPower += 1f;
+			if (jumpPower > 30f) {
+				playerMover.IsHighJump = true;
+			}
 		}
 	}
 }

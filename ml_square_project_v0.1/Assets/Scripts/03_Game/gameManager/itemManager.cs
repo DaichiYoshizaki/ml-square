@@ -6,13 +6,13 @@ public class itemManager : MonoBehaviour {
 
 	static private List<bool> getItemOnStageIndex;
 
-	static void GetItem (){
+	static public void GetItem (){
 		getItemOnStageIndex[gameManager.currentStageIndex] = true;
 	}
 
 	// Use this for initialization
 	void Awake () {
-		getItemOnStageIndex.Clear ();
+		getItemOnStageIndex = new List<bool>{ false , false,};
 	}
 
 }
