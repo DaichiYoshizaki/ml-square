@@ -12,6 +12,12 @@ public class playerMover : MonoBehaviour {
 	public List<Sprite> SpriteList;
 	public LayerMask groundLayer;
 	public LayerMask wallLayer;
+	private bool isHighJump = false;
+
+	public bool IsHighJump{
+		set{isHighJump = value;}
+		get{return isHighJump;}
+	}
 
 	private bool IsGrounded(){
 		bool isGround;
@@ -83,7 +89,6 @@ public class playerMover : MonoBehaviour {
 
 		if (IsGrounded ()) {
 			isAbleToJump = true;
-			Debug.Log (isAbleToJump);
 		}
 
 		//壁にぶつかった時
@@ -92,6 +97,8 @@ public class playerMover : MonoBehaviour {
 			changeFace ();
 
 		//もし移動ができるならば
+
+		Color col = playerSprite.color;
 
 		if (isAbleToMove) {
 			//右左でスプライトの変更
@@ -104,6 +111,10 @@ public class playerMover : MonoBehaviour {
 				transform.Translate(Vector2.right * -walkSpeed);
 				playerSprite.sprite = SpriteList [1];
 			}
+			if (col.g <= 1f) {
+				col.g+=0.1f;
+				col.b+=0.1f;
+			}
 			//左右でスプライトの
 		} else {
 			rb2d.velocity = Vector2.right * 0f;
@@ -112,6 +123,18 @@ public class playerMover : MonoBehaviour {
 			} else {
 				playerSprite.sprite = SpriteList [3];
 			}
+			if (playerSprite.color.g >= 0f && isHighJump) {
+				col.g-=0.1f;
+				col.b-=0.1f;
+			}
+		}
+		playerSprite.color = col;
+		Debug.Log (col);
+	}
+	public void OnTriggerEnter2D(Collider2D col){
+		if(col.CompareTag("item")){
+			itemManager.GetItem();
+			Destroy(col.gameObject);
 		}
 	}
 }
