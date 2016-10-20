@@ -53,6 +53,9 @@ public class Fade : MonoBehaviour {
 					alpha = 1 - speed;
 					// 処理をFadeInに切り替え。LoadSceneが終わったらFadeInが開始する。
 					fadeInFlag = true;
+					if (nextScene == Application.loadedLevelName) {
+						SceneManager.LoadScene("06_Loading");
+					}
 					SceneManager.LoadScene(nextScene);
 				}
 			}

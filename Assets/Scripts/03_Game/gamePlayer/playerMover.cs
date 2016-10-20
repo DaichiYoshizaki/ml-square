@@ -37,10 +37,12 @@ public class playerMover : MonoBehaviour {
 
 	//プレイヤーのジャンプ
 	public void jump(float jumpPower){
-		if (isAbleToJump) {
-			rb2d.AddForce (Vector2.up * jumpPower);
-			isAbleToJump = false;
+		if (!pauser.isPause) {
+			if (isAbleToJump) {
+				rb2d.AddForce (Vector2.up * jumpPower);
+				isAbleToJump = false;
 
+			}
 		}
 	}
 
