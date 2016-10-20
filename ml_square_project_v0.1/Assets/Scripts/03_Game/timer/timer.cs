@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class timer : MonoBehaviour {
 
+	public GameObject timerText;
 	private Text text;
 	private float countTime;
 
@@ -15,7 +16,7 @@ public class timer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		countTime = 15f;
-		text = GetComponent<Text> ();
+		text = timerText.GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
