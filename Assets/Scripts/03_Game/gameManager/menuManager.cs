@@ -1,28 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class tapToStartManager : MonoBehaviour {
-	public GameObject tapToStartCanvas;
+public class menuManager : MonoBehaviour {
+	public GameObject menuCanvas;
 	static private Canvas canvas;
 	private Vector3 panelDefaultScale;
-	static private bool isShowTapToStart = false;
-	static private bool isOpening = false;
-	static private bool isClosing = false;
+	static public bool isShowMenu = false;
+	static public bool isOpening = false;
+	static public bool isClosing = false;
 	public GameObject panelObject;
 	private RectTransform panelRt;
 
 	// Use this for initialization
 	void Awake () {
-		isShowTapToStart = false;
+		isShowMenu = false;
 		isOpening = false;
 		isClosing = false;
-		canvas = tapToStartCanvas.GetComponent<Canvas> ();
+		canvas = menuCanvas.GetComponent<Canvas> ();
 		panelRt = panelObject.GetComponent<RectTransform> ();
 		panelDefaultScale = panelRt.transform.localScale;
-		canvas.enabled = true;
-		isOpening = true;
+		panelRt.transform.localScale = new Vector3(0f, 0f, 0f);
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (isOpening) {
@@ -30,7 +29,7 @@ public class tapToStartManager : MonoBehaviour {
 			if (panelRt.transform.localScale.x > panelDefaultScale.x) {
 				panelRt.transform.localScale = panelDefaultScale;
 				isOpening = false;
-				isShowTapToStart = true;
+				isShowMenu = true;
 				pauser.Pause ();
 			}
 		}
@@ -43,28 +42,15 @@ public class tapToStartManager : MonoBehaviour {
 				pauser.Resume ();
 			}		
 		}
-			
-		if (isShowTapToStart) {
-			if (Input.GetMouseButtonDown (0)) {
-				isShowTapToStart = false;
-				isClosing = true;
-			}
-
-			if (Input.touchCount > 0) {
-
-				Touch touch = Input.GetTouch (0);
-
-				//タッチしたら
-				if (touch.phase == TouchPhase.Began) {
-					isShowTapToStart = false;
-					isClosing = true;
-				}			
-			}
-		}
-
 	}
-	static public void showTapToStart(){
-		canvas.enabled = true;
-		isOpening = true;
+	static public void open(){
+		if (!isOpening && !isClosing) {
+			isOpening = true;
+			canvas.enabled = true;
+		}
+	}
+	static public void close(){
+		if (!isOpening && !isClosing)
+			isClosing = true;	
 	}
 }
