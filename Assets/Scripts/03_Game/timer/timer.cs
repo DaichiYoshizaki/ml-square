@@ -18,7 +18,6 @@ public class timer : MonoBehaviour {
 		get{ return isTimeStop; }
 	}
 
-
 	// Use this for initialization
 	void Start () {
 		countTime = 15f;
@@ -28,15 +27,20 @@ public class timer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		countTime -= Time.deltaTime; //スタートしてからの秒数を格納
+		if (!isTimeStop) {
+			countTime -= Time.deltaTime; //スタートしてからの秒数を格納
+		}
 		text.text = countTime.ToString("00"); //小数2桁にして表示
-		if (countTime < 0) {
-			pauser.Pause ();
-			countTime = 15;
+		if (countTime < 0f) {
+			gameClearManager.stageClear ();
 			isTimeStop = true;
+			countTime = 15;
 		}
 	}
 	static public void StartTimer(){
-		pauser.Resume ();
+		isTimeStop = false;
+	}
+	static public void StopTimer(){
+		isTimeStop = true;
 	}
 }

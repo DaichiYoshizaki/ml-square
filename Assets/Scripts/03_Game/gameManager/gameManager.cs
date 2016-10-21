@@ -9,13 +9,9 @@ public class gameManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		currentStageIndex = 0;
-		timer = timerObject.GetComponent<timer> ();
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (timer.CountTime < 0) {
-			currentStageIndex++;
-		}
+	void FixedUpdate () {
 	}
 }
