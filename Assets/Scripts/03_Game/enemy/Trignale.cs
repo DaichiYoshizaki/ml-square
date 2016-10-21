@@ -6,7 +6,7 @@ public class Trignale : MonoBehaviour {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private bool isMovingVertical = true; // 縦移動/横移動の判定
-	public float moveSpeed = 0.05f; // 移動測度
+	private float moveSpeed = 0.05f; // 移動測度
 	private bool isAbleToMove = true; // 移動可能か否か（衝突時に使用）
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
@@ -17,6 +17,7 @@ public class Trignale : MonoBehaviour {
 	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
 
+	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
@@ -67,7 +68,7 @@ public class Trignale : MonoBehaviour {
 	}
 
 	//方向変換
-	public void changeFace(){
+	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
 	}
 		
@@ -76,10 +77,6 @@ public class Trignale : MonoBehaviour {
 	public float MoveSpeed{
 		set{moveSpeed = value;}
 		get{return moveSpeed;}
-	}
-	public bool IsAbleToMove{
-		set{isAbleToMove = value;}
-		get{return isAbleToMove;}
 	}
 	//プロパティ終わり----------------------------
 
@@ -99,6 +96,7 @@ public class Trignale : MonoBehaviour {
 		// 縦移動時処理
 		if(isMovingVertical) {
 			// プレイヤーと軸が合うか障害物に衝突したら、上下移動をやめて横移動を開始する。
+			// もしくは、移動処理を行っているのに前フレームから変化がなければ、移動を中断
 			if(IsSameAxis( ) || IsVerticalCollied( ) || !isAbleToMove || oldPosition == transform.position) {
 				isMovingVertical = false;
 				moveSpeed = 0.15f;
@@ -115,10 +113,6 @@ public class Trignale : MonoBehaviour {
 				else {
 					transform.Translate(Vector2.down * moveSpeed);
 				}
-
-				// 移動処理を行っているのに前フレームから変化がなければ、移動を中断
-//				if(oldPosition == transform.position)
-//					isAbleToMove = false;
 			}
 		}
 		// 横移動処理
@@ -126,7 +120,7 @@ public class Trignale : MonoBehaviour {
 			// 障害物か画面端に衝突したらしばらく動きを止める
 			// もしくは、移動処理を行っているのに前フレームから変化がなければ、移動を中断
 			if( (IsHorizontalCollied()  || oldPosition == transform.position) && isAbleToMove) {
-				changeFace();
+				ChangeFace();
 				waitTime = 1.0f;
 				changeFlag = true;
 				isAbleToMove = false;
@@ -145,14 +139,6 @@ public class Trignale : MonoBehaviour {
 				else {
 					transform.Translate(Vector2.left * moveSpeed);
 				}
-
-				// 移動処理を行っているのに前フレームから変化がなければ、移動を中断
-/*				if(oldPosition == transform.position) {
-					changeFace();
-					waitTime = 1.0f;
-					changeFlag = true;
-					isAbleToMove = false;
-				}*/
 			}
 			// 衝突から0.5秒で振り返る
 			else if(waitTime <= 0.5f && changeFlag) {
