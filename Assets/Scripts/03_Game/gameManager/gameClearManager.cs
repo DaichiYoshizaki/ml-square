@@ -61,6 +61,7 @@ public class gameClearManager : MonoBehaviour {
 			dummyPlayer.name = "dummyPlayer";
 			dummyPlayer.transform.parent = null;
 			player.transform.position = playerSpawn [gameManager.currentStageIndex].transform.position;
+			player.transform.Translate(new Vector3(0f, 0f, 1f));
 			crane.IsStartCrane = true;
 			pauser.Pause ();
 			isStageClear = false;
