@@ -2578,10 +2578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45321f7459f82460f9917db5bbb8198d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawn:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  stages:
+  - {fileID: 1607740361}
+  - {fileID: 1150715371}
+  - {fileID: 1988501851}
   player: {fileID: 1986334076}
   camera: {fileID: 906809169}
   craneObject: {fileID: 2026599998}

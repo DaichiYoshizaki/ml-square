@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class gameClearManager : MonoBehaviour {
-
-	public List<GameObject> playerSpawn;
+	private List<GameObject> stages;
+	private List<GameObject> playerSpawn;
 	public GameObject player;
 	public GameObject camera;
 	public GameObject craneObject;
@@ -39,6 +39,11 @@ public class gameClearManager : MonoBehaviour {
 		isStageClear = false;
 		isAreaClear = false;
 		isAbleToCameraMove = false;
+		playerSpawn = new List<GameObject>{null, null, null};
+
+		playerSpawn [0] = GameObject.Find ("gameStage1/spawnPoint");
+		playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
+		playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
 
 		//awake for Canvas
 		clearPanelAwake ();
