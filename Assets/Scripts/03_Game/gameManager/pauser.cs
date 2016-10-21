@@ -17,6 +17,8 @@ public class pauser : MonoBehaviour {
 	Vector2[] rg2dBodyVels = null;
 	float[] rg2dBodyAVels = null;
 
+	static public bool isPause = false;
+
 	// 初期化
 	void Start() {
 		// ポーズ対象に追加する
@@ -62,7 +64,7 @@ public class pauser : MonoBehaviour {
 
 	// ポーズ解除されたとき
 	void OnResume() {
-		if ( pauseBehavs == null ) {
+		if ( pauseBehavs == null || pauseBehavs[0] == null) {
 			return;
 		}
 
@@ -99,6 +101,8 @@ public class pauser : MonoBehaviour {
 		foreach ( var obj in targets ) {
 			obj.OnPause();
 		}
+		isPause = true;
+
 	}
 
 	// ポーズ解除
@@ -106,5 +110,6 @@ public class pauser : MonoBehaviour {
 		foreach ( var obj in targets ) {
 			obj.OnResume();
 		}
+		isPause = false;
 	}
 }

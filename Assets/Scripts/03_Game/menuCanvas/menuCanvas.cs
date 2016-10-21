@@ -3,8 +3,6 @@ using System.Collections;
 
 public class menuCanvas : MonoBehaviour {
 
-    static private bool opened = false;
-
     static public void Open(){
         
     }

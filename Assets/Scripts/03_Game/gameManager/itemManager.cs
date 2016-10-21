@@ -12,7 +12,7 @@ public class itemManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		getItemOnStageIndex = new List<bool>{ false , false,};
+		getItemOnStageIndex = new List<bool>{ false , false, false};
 	}
 
 }
