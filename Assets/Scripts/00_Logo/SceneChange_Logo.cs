@@ -14,7 +14,7 @@ public class SceneChange_Logo : MonoBehaviour {
 	void Update () {
 		second += Time.deltaTime;
 
-		if(Input.touchCount > 0 || second > 4.0f || Input.GetMouseButtonDown(0)) {
+		if(Input.touchCount > 0 || second > 3.0f || Input.GetMouseButtonDown(0)) {
 			Fade.instance.FadeOut("01_Title", 2, 1);
 		}
 	}
