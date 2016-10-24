@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public class stageEdit : EditorWindow
 {
@@ -18,6 +19,10 @@ public class stageEdit : EditorWindow
 	static private GameObject[] stages = {null, null, null};
 
 	static private int stageIndex;
+
+	private List<Transform> allObject;
+
+	private int createAreaIndex = 0;
 
 	public enum stageNum{
 		stage1,
@@ -40,6 +45,12 @@ public class stageEdit : EditorWindow
 
 		editWindow.ShowUtility ();
 	}
+
+	void CSVExport(){
+		int count = 0;
+		List<Transform> tes = new List<Transform>();
+	}
+
 	void OnGUI (){
 		if (isFirstTime) {
 			isFirstTime = false;
@@ -155,19 +166,35 @@ public class stageEdit : EditorWindow
 						currentSerchObject = obj;
 
 						SceneView.onSceneGUIDelegate += sceneView;
-						SceneView.onSceneGUIDelegate -= sceneView;
 
 						Undo.RegisterCreatedObjectUndo (obj, "object create");
 					}
 				}
 			}
 
-			numtoint = (stageNum)EditorGUI.EnumPopup (new Rect (20.0f, 20.0f + (1 + length) * 55.0f, 270.0f, 50.0f), "create on stage index", numtoint);
+			numtoint = (stageNum)EditorGUI.EnumPopup (new Rect (20.0f, 20.0f + (1 + length) * 55.0f, 270.0f, 10.0f), "create on stage index", numtoint);
 			stageIndex = (int)numtoint;
 
-			if (GUI.Button (new Rect (20.0f, 20.0f + (2 + length) * 55.0f, 270.0f, 50.0f), "CSV Export")) {
-				Debug.Log ("CSV Export");
+			createAreaIndex = EditorGUI.IntField (new Rect (20.0f, 20.0f + (1 + length) * 62.0f, 270.0f, 15.0f), "createAreaIndex", createAreaIndex );
 
+			if (GUI.Button (new Rect (20.0f, 20.0f + (1 + length) * 69.0f, 270.0f, 50.0f), "SaveDataExport")) {
+				int count = 0;
+				stageData sd = new stageData{};
+				sd.entryEnemy = new List<EnemyDetail> ();
+				for (int i = 0; i < 3; i++) {
+					foreach (Transform child in stages[i].transform) {
+						if (child.name != "defaultObject") {
+							EnemyDetail ed = new EnemyDetail ();
+							ed.prefabName = child.name;
+							ed.stageIndex = i;
+							ed.enemy_pos = child.position;
+							ed.enemy_rot = child.rotation;
+							ed.enemy_scl = child.localScale;
+							sd.entryEnemy.Add (ed);
+						}
+					}
+				}
+				saveStageData.CreateAsset (sd, createAreaIndex);
 			}
 		}
 	}

@@ -2540,7 +2540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c0f5eb86c5f4bbf91d0095a29b164d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerObject: {fileID: 1305975493}
+  isDebugMode: 0
+  stage: 0
 --- !u!114 &885779274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2578,8 +2579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45321f7459f82460f9917db5bbb8198d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1986334076}
-  camera: {fileID: 906809169}
+  gameCamera: {fileID: 0}
   craneObject: {fileID: 2026599998}
   gameClearCanvas: {fileID: 46756239}
   panelObject: {fileID: 913350673}
@@ -4983,7 +4983,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1986334076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.6, z: 1}
+  m_LocalPosition: {x: 0, y: -1.83, z: 1}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
