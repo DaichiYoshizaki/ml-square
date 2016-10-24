@@ -53,6 +53,8 @@ public class gameClearManager : MonoBehaviour {
 
 		player = GameObject.Find ("PauseObjects/gamePlayer");
 
+		gameCamera = GameObject.Find ("gameCamera");
+
 		//awake for Canvas
 		clearPanelAwake ();
 		crane = craneObject.GetComponent<crane> ();
