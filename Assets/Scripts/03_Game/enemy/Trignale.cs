@@ -76,7 +76,7 @@ public class Trignale : MonoBehaviour {
 	}
 
 	// ポーズ状態のON/OFF
-	public void EnemyPauseChange( ) {
+	static public void EnemyPauseChange( ) {
 		enemyPauseFlag = !enemyPauseFlag;
 	}
 

@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 public class Atsr : MonoBehaviour {
 	private float rotSpeed = -5; // 回転速度
-	private SpriteRenderer enemySprite; // スプライト情報取得用
-	public List<Sprite> SpriteList; // スプライトリスト取得用
 	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 
 	// ポーズ状態のON/OFF
-	public void EnemyPauseChange( ) {
+	static public void EnemyPauseChange( ) {
 		enemyPauseFlag = !enemyPauseFlag;
 	}
 
@@ -23,8 +21,6 @@ public class Atsr : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
-		enemySprite.sprite = SpriteList[0];
 	}
 
 	void Update(){
