@@ -2,17 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Srauqe_tri : MonoBehaviour {
-	private bool isFacingRight; // 向いている方向判定
-	private bool isAbleToJump = false; // ジャンプ可否判定
-	private float gravity = 0.01f; // 重力加速度
-	private float jumpSpeed = -0.1f; // ジャンプ速度
+public class Trignale_pink : MonoBehaviour {
+	private bool isMovingUp = true; // 上下どちらに移動するか判定
+	private float moveSpeed = 0.05f; // 移動速度
+	private float moveDistance = 0; // 移動距離
+	private bool isAbleToMove = true; // 移動可能か否か（衝突時に使用）
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	public LayerMask groundLayer; // 障害物レイヤ
 	public LayerMask wallLayer; // 画面端レイヤ
-	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
+	private Vector3 oldPosition; // 前回位置保存用
 	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
@@ -20,7 +20,7 @@ public class Srauqe_tri : MonoBehaviour {
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
-		if(jumpSpeed > 0) {
+		if(isMovingUp) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
 		} else {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
@@ -28,20 +28,19 @@ public class Srauqe_tri : MonoBehaviour {
 		return isVerCol;
 	}
 
-	// ジャンプ
-	public void Jump(float jumpPower){
-		if (isAbleToJump) {
-			jumpSpeed = jumpPower;
-			isAbleToJump = false;
+	// プレイヤーのいる方向取得
+	private void IsPlayerRightside( ) {
+		if(playerMover.transform.position.x > transform.position.x) {
+			enemySprite.sprite = SpriteList[0];
+		}
+		else {
+			enemySprite.sprite = SpriteList[1];
 		}
 	}
 
-	// プレイヤーが一定距離以内にいるならジャンプする
-	private bool ChkDistance( ) {
-		if(Mathf.Abs(playerMover.transform.position.x - transform.position.x) < 2f) {
-			return true;
-		}
-		return false;
+	//方向変換
+	public void ChangeUpDown( ) {
+		isMovingUp = !isMovingUp;
 	}
 
 	// ポーズ状態のON/OFF
@@ -50,19 +49,22 @@ public class Srauqe_tri : MonoBehaviour {
 	}
 
 	//プロパティ--------------------------------
-
-
+	public float MoveSpeed{
+		private set{moveSpeed = value;}
+		get{return moveSpeed;}
+	}
 	//プロパティ終わり----------------------------
 
 
 	// Use this for initialization
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
-		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
 		// Colliderのサイズ取得
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// プレイヤーの位置から初期の向きを設定
+		IsPlayerRightside( );
 	}
 
 	void Update(){
@@ -72,38 +74,29 @@ public class Srauqe_tri : MonoBehaviour {
 	void FixedUpdate () {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
-			if(!isAbleToJump) {
-				transform.Translate(Vector2.up * jumpSpeed);
-				jumpSpeed -= gravity;
-				// 落下速度制限　めり込み処理が重くなりすぎないように
-				if(jumpSpeed < -1)
-					jumpSpeed = -1;
+			// 障害物か画面端に衝突したらしばらく動きを止める
+			// もしくは、移動処理を行っているのに前フレームから変化がなければ、移動を中断
+			if( (IsVerticalCollied( ) || oldPosition == transform.position || moveDistance >= 3.0f) && isAbleToMove) {
+				moveDistance = 0;
+				ChangeUpDown( );
+				oldPosition.x += 1; // 衝突後の待機状態が終わった時点でoldPosition == positionを満たしてしまうため、数値をずらしておく
+			}
 
-				// 着地したら2秒待機
-				if(IsVerticalCollied( ) ) {
-					if(jumpSpeed < 0) {
-						isAbleToJump = true;
-						jumpSpeed = 0;
-						waitTime = 2;
-						// 地面めり込み対策
-						while(IsVerticalCollied( ) ) {
-							transform.Translate(Vector3.up * 0.02f);
-						}
-					}
-					// 上にぶつかったら縦方向の移動量を0にして後は自然落下させる
-					else {
-						jumpSpeed = 0;
-					}
-				}
+			// 振り向き処理
+			IsPlayerRightside( );
+
+			// 前回位置保存
+			oldPosition = transform.position;
+
+			// 上下移動
+			if(isMovingUp) {
+				transform.Translate(Vector2.up * moveSpeed);
 			}
 			else {
-				waitTime -= Time.deltaTime;
-				if(waitTime <= 0 && ChkDistance( ) ) {
-					// ジャンプ
-					Jump(0.3f);
-					isAbleToJump = false;
-				}
+				transform.Translate(Vector2.down * moveSpeed);
 			}
+			// 移動距離加算
+			moveDistance += moveSpeed;
 		}
 	}
 }

@@ -64,6 +64,7 @@ public class Riccle : MonoBehaviour {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
+		// Colliderのサイズ取得
 		colSize = GetComponent<CircleCollider2D>( ).bounds.size;
 	}
 
