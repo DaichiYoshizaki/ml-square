@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Srauqe : MonoBehaviour {
+public class Srauqe_tri : MonoBehaviour {
+	private bool isFacingRight; // 向いている方向判定
 	private bool isAbleToJump = false; // ジャンプ可否判定
 	private float gravity = 0.01f; // 重力加速度
 	private float jumpSpeed = -0.1f; // ジャンプ速度
@@ -11,6 +12,7 @@ public class Srauqe : MonoBehaviour {
 	public LayerMask groundLayer; // 障害物レイヤ
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
+	private GameObject playerMover; // プレイヤー情報取得用
 	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
@@ -34,6 +36,14 @@ public class Srauqe : MonoBehaviour {
 		}
 	}
 
+	// プレイヤーが一定距離以内にいるならジャンプする
+	private bool ChkDistance( ) {
+		if(Mathf.Abs(playerMover.transform.position.x - transform.position.x) < 2f) {
+			return true;
+		}
+		return false;
+	}
+
 	// ポーズ状態のON/OFF
 	static public void EnemyPauseChange( ) {
 		enemyPauseFlag = !enemyPauseFlag;
@@ -49,6 +59,7 @@ public class Srauqe : MonoBehaviour {
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
+		playerMover = GameObject.Find("gamePlayer");
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
 	}
@@ -66,7 +77,7 @@ public class Srauqe : MonoBehaviour {
 				// 落下速度制限　めり込み処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
-				
+
 				// 着地したら2秒待機
 				if(IsVerticalCollied( ) ) {
 					if(jumpSpeed < 0) {
