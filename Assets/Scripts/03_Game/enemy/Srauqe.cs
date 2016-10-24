@@ -49,6 +49,7 @@ public class Srauqe : MonoBehaviour {
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
+		// Colliderのサイズ取得
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
 	}

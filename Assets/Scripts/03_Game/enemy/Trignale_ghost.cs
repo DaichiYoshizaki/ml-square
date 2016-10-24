@@ -60,9 +60,11 @@ public class Trignale_ghost : MonoBehaviour {
 		if(!enemyPauseFlag) {
 			transform.Translate(moveSpeed);
 
+			// 上下左右どの方向にプレイヤーいるか確認。他のやつの使い回しなので関数名は許して
 			ChkMovingWay( );
 			IsPlayerRightside( );
 
+			// 上下移動
 			if(isMovingUp) {
 				moveSpeed.y += 0.0005f;
 				if(moveSpeed.y >= 0.04f)
@@ -74,6 +76,7 @@ public class Trignale_ghost : MonoBehaviour {
 					moveSpeed.y = -0.04f;
 			}
 
+			// 左右移動
 			if(isFacingRight) {
 				moveSpeed.x += 0.0005f;
 				if(moveSpeed.x >= 0.04f)

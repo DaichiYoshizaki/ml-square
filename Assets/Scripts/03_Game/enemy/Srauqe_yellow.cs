@@ -80,6 +80,7 @@ public class Srauqe_yellow : MonoBehaviour {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
+		// Colliderのサイズ取得
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
 		ChkMovingWay( );
@@ -127,6 +128,7 @@ public class Srauqe_yellow : MonoBehaviour {
 				if(waitTime <= 0) {
 					// ジャンプ
 					Jump(0.3f);
+					// 左右どちらにプレイヤーがいるか確認
 					ChkMovingWay( );
 					if(isFacingRight) {
 						moveSpeed = 0.1f;
