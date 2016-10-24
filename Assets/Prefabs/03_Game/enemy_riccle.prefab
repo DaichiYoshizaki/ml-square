@@ -39,7 +39,7 @@ GameObject:
   - 61: {fileID: 61000013179062104}
   m_Layer: 0
   m_Name: enemy_riccle
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
