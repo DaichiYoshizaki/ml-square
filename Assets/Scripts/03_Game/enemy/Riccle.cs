@@ -14,6 +14,7 @@ public class Riccle : MonoBehaviour {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
+	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
@@ -39,6 +40,10 @@ public class Riccle : MonoBehaviour {
 		isFacingRight = !isFacingRight;
 	}
 		
+	// ポーズ状態のON/OFF
+	public void EnemyPauseChange( ) {
+		enemyPauseFlag = !enemyPauseFlag;
+	}
 
 	//プロパティ--------------------------------
 	public float MoveUpSpeed{
@@ -56,6 +61,7 @@ public class Riccle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
 	}
 
@@ -64,43 +70,46 @@ public class Riccle : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		// 上昇処理
-		if(isMovingUp) {
-			if(isAbleToMove) {
-				// 天井到達で2秒待機、落下モードに切り替え
-				if(IsVerticalCollied( )) {
-					isMovingUp = false;
-					isAbleToMove = false;
-					waitTime = 2;
+		// ポーズ状態では更新しない
+		if(!enemyPauseFlag) {
+			// 上昇処理
+			if(isMovingUp) {
+				if(isAbleToMove) {
+					// 天井到達で2秒待機、落下モードに切り替え
+					if(IsVerticalCollied( )) {
+						isMovingUp = false;
+						isAbleToMove = false;
+						waitTime = 2;
+					}
+					// 移動
+					transform.Translate(Vector2.up * moveUpSpeed);
 				}
-				// 移動
-				transform.Translate(Vector2.up * moveUpSpeed);
+				else {
+					// 待機時間進行。0で行動開始
+					waitTime -= Time.deltaTime;
+					if(waitTime <= 0) {
+						isAbleToMove = true;
+					}
+				}
 			}
+			// 落下処理
 			else {
-				// 待機時間進行。0で行動開始
-				waitTime -= Time.deltaTime;
-				if(waitTime <= 0) {
-					isAbleToMove = true;
+				if(isAbleToMove) {
+					// 地面衝突で1秒待機、昇降モードに切り替え
+					if(IsVerticalCollied( )) {
+						isMovingUp = true;
+						isAbleToMove = false;
+						waitTime = 1;
+					}
+					// 移動
+					transform.Translate(Vector2.down * moveDownSpeed);
 				}
-			}
-		}
-		// 落下処理
-		else {
-			if(isAbleToMove) {
-				// 地面衝突で1秒待機、昇降モードに切り替え
-				if(IsVerticalCollied( )) {
-					isMovingUp = true;
-					isAbleToMove = false;
-					waitTime = 1;
-				}
-				// 移動
-				transform.Translate(Vector2.down * moveDownSpeed);
-			}
-			else {
-				// 待機時間進行。0で行動開始
-				waitTime -= Time.deltaTime;
-				if(waitTime <= 0) {
-					isAbleToMove = true;
+				else {
+					// 待機時間進行。0で行動開始
+					waitTime -= Time.deltaTime;
+					if(waitTime <= 0) {
+						isAbleToMove = true;
+					}
 				}
 			}
 		}

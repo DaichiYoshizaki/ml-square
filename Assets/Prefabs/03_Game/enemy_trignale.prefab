@@ -24,7 +24,7 @@ GameObject:
   - 61: {fileID: 61000012566712956}
   m_Layer: 0
   m_Name: enemy_trignale
-  m_TagString: Trignale
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b80c20c6a7724c33ba87e25bb87c4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.1
   SpriteList:
   - {fileID: 21300000, guid: bea31fdd83e51424baaa74ee78aa4dfd, type: 3}
   - {fileID: 21300000, guid: cf5aa4e78f3fe4651952be49c9a3ac06, type: 3}
