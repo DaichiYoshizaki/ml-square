@@ -6,7 +6,7 @@ public class Trignale : MonoBehaviour {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private bool isMovingVertical = true; // 縦移動/横移動の判定
-	private float moveSpeed = 0.05f; // 移動測度
+	private float moveSpeed = 0.05f; // 移動速度
 	private bool isAbleToMove = true; // 移動可能か否か（衝突時に使用）
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
@@ -92,10 +92,17 @@ public class Trignale : MonoBehaviour {
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		playerMover = GameObject.Find("gamePlayer");
+		// Colliderのサイズ取得
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// プレイヤーの位置から初期の向きを設定
 		ChkMovingWay( );
-	}
+		if(isFacingRight) {
+			enemySprite.sprite = SpriteList[0];
+		}
+		else {
+			enemySprite.sprite = SpriteList[1];
+		}	}
 
 	void Update(){
 	}
