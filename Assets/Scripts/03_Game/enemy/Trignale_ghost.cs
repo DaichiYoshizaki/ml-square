@@ -15,9 +15,11 @@ public class Trignale_ghost : MonoBehaviour {
 	private void IsPlayerRightside( ) {
 		if(playerMover.transform.position.x > transform.position.x) {
 			isFacingRight = true;
+			enemySprite.sprite = SpriteList[0];
 		}
 		else {
 			isFacingRight = false;
+			enemySprite.sprite = SpriteList[1];
 		}
 	}
 
