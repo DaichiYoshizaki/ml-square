@@ -15,14 +15,15 @@ public class Riccle : MonoBehaviour {
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
 	static bool enemyPauseFlag = false; // ポーズ状態フラグ
+	private Vector3 colSize; // Colliderのサイズ取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * 0.75f, groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * 0.75f, groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -41,7 +42,7 @@ public class Riccle : MonoBehaviour {
 	}
 		
 	// ポーズ状態のON/OFF
-	public void EnemyPauseChange( ) {
+	static public void EnemyPauseChange( ) {
 		enemyPauseFlag = !enemyPauseFlag;
 	}
 
@@ -63,6 +64,7 @@ public class Riccle : MonoBehaviour {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
+		colSize = GetComponent<CircleCollider2D>( ).bounds.size;
 	}
 
 	void Update(){
@@ -75,14 +77,20 @@ public class Riccle : MonoBehaviour {
 			// 上昇処理
 			if(isMovingUp) {
 				if(isAbleToMove) {
+					// 移動
+					transform.Translate(Vector2.up * moveUpSpeed);
+
 					// 天井到達で2秒待機、落下モードに切り替え
 					if(IsVerticalCollied( )) {
+						// めり込み対策
+						while(IsVerticalCollied( ) ) {
+							transform.Translate(Vector3.down * 0.02f);
+						}
+
 						isMovingUp = false;
 						isAbleToMove = false;
 						waitTime = 2;
 					}
-					// 移動
-					transform.Translate(Vector2.up * moveUpSpeed);
 				}
 				else {
 					// 待機時間進行。0で行動開始
@@ -95,14 +103,20 @@ public class Riccle : MonoBehaviour {
 			// 落下処理
 			else {
 				if(isAbleToMove) {
+					// 移動
+					transform.Translate(Vector2.down * moveDownSpeed);
+
 					// 地面衝突で1秒待機、昇降モードに切り替え
 					if(IsVerticalCollied( )) {
+						// 地面めり込み対策
+						while(IsVerticalCollied( ) ) {
+							transform.Translate(Vector3.up * 0.02f);
+						}
+
 						isMovingUp = true;
 						isAbleToMove = false;
 						waitTime = 1;
 					}
-					// 移動
-					transform.Translate(Vector2.down * moveDownSpeed);
 				}
 				else {
 					// 待機時間進行。0で行動開始
