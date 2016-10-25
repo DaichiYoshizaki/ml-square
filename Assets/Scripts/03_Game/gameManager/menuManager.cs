@@ -12,7 +12,7 @@ public class menuManager : MonoBehaviour {
 	private RectTransform panelRt;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		isShowMenu = false;
 		isOpening = false;
 		isClosing = false;

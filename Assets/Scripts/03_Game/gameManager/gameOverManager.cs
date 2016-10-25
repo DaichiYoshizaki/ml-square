@@ -12,7 +12,7 @@ public class gameOverManager : MonoBehaviour {
 	private RectTransform panelRt;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		isShowGameOver = false;
 		isOpening = false;
 		isClosing = false;
@@ -46,6 +46,7 @@ public class gameOverManager : MonoBehaviour {
 		if (!isOpening && !isClosing) {
 			isOpening = true;
 			canvas.enabled = true;
+			pauser.Pause ();
 		}
 	}
 	static public void close(){

@@ -45,12 +45,6 @@ public class stageEdit : EditorWindow
 
 		editWindow.ShowUtility ();
 	}
-
-	void CSVExport(){
-		int count = 0;
-		List<Transform> tes = new List<Transform>();
-	}
-
 	void OnGUI (){
 		if (isFirstTime) {
 			isFirstTime = false;
@@ -178,7 +172,6 @@ public class stageEdit : EditorWindow
 			createAreaIndex = EditorGUI.IntField (new Rect (20.0f, 20.0f + (1 + length) * 62.0f, 270.0f, 15.0f), "createAreaIndex", createAreaIndex );
 
 			if (GUI.Button (new Rect (20.0f, 20.0f + (1 + length) * 69.0f, 270.0f, 50.0f), "SaveDataExport")) {
-				int count = 0;
 				stageData sd = new stageData{};
 				sd.entryEnemy = new List<EnemyDetail> ();
 				for (int i = 0; i < 3; i++) {
@@ -194,7 +187,12 @@ public class stageEdit : EditorWindow
 						}
 					}
 				}
+				if (Resources.Load ("stageData/stage" + createAreaIndex.ToString ())) {
+					string a = "Resources/stageData/stage" + createAreaIndex.ToString ();
+					AssetDatabase.DeleteAsset (a);
+				}
 				saveStageData.CreateAsset (sd, createAreaIndex);
+				AssetDatabase.Refresh ();
 			}
 		}
 	}

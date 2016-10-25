@@ -12,7 +12,7 @@ public class tapToStartManager : MonoBehaviour {
 	private RectTransform panelRt;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		isShowTapToStart = false;
 		isOpening = false;
 		isClosing = false;

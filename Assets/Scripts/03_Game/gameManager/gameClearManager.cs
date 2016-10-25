@@ -37,7 +37,7 @@ public class gameClearManager : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		isStageClear = false;
 		isAreaClear = false;
 		isAbleToMove = false;
@@ -63,6 +63,10 @@ public class gameClearManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (isStageClear && !isAreaClear) {
+			playerSpawn [0] = GameObject.Find ("gameStage1/spawnPoint");
+			playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
+			playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
+
 			gameManager.currentStageIndex++;
 			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 			Destroy (dummyPlayer.GetComponent<playerMover> ());

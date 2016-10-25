@@ -12,9 +12,15 @@ public class gameManager : MonoBehaviour {
 	static public int currentStageIndex = 0;
 	public bool isDebugMode = false;
 	public int stage = 0;
+	public int AreaSelectIndex = 0;
+	static public int areaSelectIndex;
+	void Awake(){
+		loadStage.Load (AreaSelectIndex);
+	}
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
+
 		currentStageIndex = 0;
 
 		stages [0] = GameObject.Find ("PauseObjects/area/gameStage1");

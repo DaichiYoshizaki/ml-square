@@ -81,7 +81,7 @@ public class playerMover : MonoBehaviour {
 
 
 	// Use this for initializations
-	void Awake() {
+	void Start() {
 		rb2d = GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.transform.FindChild ("playerSprite").GetComponent<SpriteRenderer>();
 		col = GetComponent<BoxCollider2D> ();
@@ -97,7 +97,7 @@ public class playerMover : MonoBehaviour {
 	void FixedUpdate () {
 
 		if (isAwake) {
-			Awake ();
+			Start();
 			rb2d.velocity = new Vector3 (0f, 0f, 0f);
 			isAwake = false;
 		}
