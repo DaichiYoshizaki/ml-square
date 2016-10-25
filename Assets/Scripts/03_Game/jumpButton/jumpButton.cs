@@ -4,7 +4,7 @@ using System.Collections;
 public class jumpButton : MonoBehaviour {
 	private bool push = false;
 	private float jumpPower;
-	public GameObject player;
+	private GameObject player;
 	private playerMover playerMover;
 
 	public void PushDown(){
@@ -29,6 +29,7 @@ public class jumpButton : MonoBehaviour {
 		}
 	}
 	void Start(){
+		player = GameObject.Find("gamePlayer");
 		playerMover = player.GetComponent<playerMover> ();
 	}
 
