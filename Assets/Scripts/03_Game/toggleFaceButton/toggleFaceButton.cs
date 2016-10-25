@@ -3,11 +3,12 @@ using System.Collections;
 
 public class toggleFaceButton : MonoBehaviour {
 	
-	public GameObject player;
+	private GameObject player;
 	private playerMover playerMover;
 
 	// Use this for initialization
 	void Start () {
+		player = GameObject.Find("gamePlayer");
 		playerMover = player.GetComponent<playerMover> ();
 	}
 	

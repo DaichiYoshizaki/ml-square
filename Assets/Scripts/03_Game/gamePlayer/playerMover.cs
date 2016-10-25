@@ -6,6 +6,7 @@ public class playerMover : MonoBehaviour {
 	private bool isFacingRight = true;
 	public bool isAbleToJump = false;
 	public float walkSpeed = 0.1f;
+	public bool isAwake = false;
 	private bool isAbleToMove = true;
 	private Rigidbody2D rb2d;
 	private SpriteRenderer playerSprite;
@@ -13,6 +14,12 @@ public class playerMover : MonoBehaviour {
 	public LayerMask groundLayer;
 	public LayerMask wallLayer;
 	private bool isHighJump = false;
+	private Collider2D col;
+
+	public bool IsAwake{
+		set{ isAwake = value; }
+		get{ return isAwake; }
+	}
 
 	public bool IsHighJump{
 		set{isHighJump = value;}
@@ -28,9 +35,9 @@ public class playerMover : MonoBehaviour {
 	private bool isWallCollied(){
 		bool isWallCollied;
 		if (isFacingRight) {
-			isWallCollied = Physics2D.Linecast (transform.position, transform.position + transform.right * 1.4f, wallLayer);
+			isWallCollied = Physics2D.Linecast (transform.position, transform.position + transform.right * col.bounds.size.x / 2f, wallLayer);
 		} else {
-			isWallCollied = Physics2D.Linecast (transform.position, transform.position - transform.right * 1.4f, wallLayer);
+			isWallCollied = Physics2D.Linecast (transform.position, transform.position - transform.right * col.bounds.size.x / 2f, wallLayer);
 		}
 		return isWallCollied;
 	}
@@ -73,10 +80,14 @@ public class playerMover : MonoBehaviour {
 	//プロパティ終わり----------------------------
 
 
-	// Use this for initialization
-	void Start () {
+	// Use this for initializations
+	void Start() {
 		rb2d = GetComponent<Rigidbody2D> ();
 		playerSprite = gameObject.transform.FindChild ("playerSprite").GetComponent<SpriteRenderer>();
+		col = GetComponent<BoxCollider2D> ();
+		isFacingRight = true;
+		isAbleToMove = true;
+		isHighJump = false;
 	}
 
 	void Update(){
@@ -84,7 +95,13 @@ public class playerMover : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		
+
+		if (isAwake) {
+			Start();
+			rb2d.velocity = new Vector3 (0f, 0f, 0f);
+			isAwake = false;
+		}
+
 		isAbleToJump = false;
 
 		//着地していてるなら
