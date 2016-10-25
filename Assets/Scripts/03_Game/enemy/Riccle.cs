@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Riccle : MonoBehaviour {
+public class Riccle : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = false; // 上下どちらに移動するか判定
 	private float moveUpSpeed = 0.1f; // 上昇速度
@@ -14,7 +14,6 @@ public class Riccle : MonoBehaviour {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 
 	// 縦方向当たり判定
@@ -39,11 +38,6 @@ public class Riccle : MonoBehaviour {
 	//方向変換
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
-	}
-		
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
 	}
 
 	//プロパティ--------------------------------

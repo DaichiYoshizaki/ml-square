@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Srauqe_tri : MonoBehaviour {
+public class Srauqe_tri : Enemy {
 	private bool isFacingRight; // 向いている方向判定
 	private bool isAbleToJump = false; // ジャンプ可否判定
 	private float gravity = 0.01f; // 重力加速度
@@ -13,7 +13,6 @@ public class Srauqe_tri : MonoBehaviour {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
 
@@ -42,11 +41,6 @@ public class Srauqe_tri : MonoBehaviour {
 			return true;
 		}
 		return false;
-	}
-
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
 	}
 
 	//プロパティ--------------------------------

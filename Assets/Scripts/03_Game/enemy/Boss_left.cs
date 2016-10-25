@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trignale : Enemy {
+public class Boss_left : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private bool isMovingVertical = true; // 縦移動/横移動の判定
@@ -73,7 +73,7 @@ public class Trignale : Enemy {
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
 	}
-		
+
 	//プロパティ--------------------------------
 	public float MoveSpeed{
 		private set{moveSpeed = value;}
@@ -96,8 +96,7 @@ public class Trignale : Enemy {
 		}
 		else {
 			enemySprite.sprite = SpriteList[1];
-		}
-	}
+		}	}
 
 	void Update(){
 	}

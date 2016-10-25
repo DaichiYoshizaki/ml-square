@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trignale_pink : MonoBehaviour {
+public class Trignale_pink : Enemy {
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private float moveSpeed = 0.05f; // 移動速度
 	private float moveDistance = 0; // 移動距離
@@ -13,7 +13,6 @@ public class Trignale_pink : MonoBehaviour {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
 
@@ -41,11 +40,6 @@ public class Trignale_pink : MonoBehaviour {
 	//方向変換
 	public void ChangeUpDown( ) {
 		isMovingUp = !isMovingUp;
-	}
-
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
 	}
 
 	//プロパティ--------------------------------
