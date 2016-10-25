@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trignale_green : MonoBehaviour {
+public class Trignale_green : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private float moveSpeed = 0.15f; // 移動速度
 	private bool isAbleToMove = true; // 移動可能か否か（衝突時に使用）
@@ -14,7 +14,6 @@ public class Trignale_green : MonoBehaviour {
 	private bool changeFlag = false; // 衝突時の方向転換判定
 	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
 
@@ -49,11 +48,6 @@ public class Trignale_green : MonoBehaviour {
 	//方向変換
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
-	}
-
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
 	}
 
 	//プロパティ--------------------------------

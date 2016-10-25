@@ -9,6 +9,7 @@ public class gameClearManager : MonoBehaviour {
 	private GameObject player;
 	public GameObject gameCamera;
 	public GameObject craneObject;
+	public GameObject enemyManager;
 	private crane crane;
 
 	static private bool isAreaClear;
@@ -78,6 +79,7 @@ public class gameClearManager : MonoBehaviour {
 			player.transform.Translate(new Vector3(0f, 0f, 1f));
 			crane.IsStartCrane = true;
 			pauser.Pause ();
+			enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex - 1);
 			isStageClear = false;
 
 		}
@@ -108,6 +110,7 @@ public class gameClearManager : MonoBehaviour {
 				pauser.Resume ();
 				pauser.Pause ();
 				player.GetComponent<playerMover> ().IsAwake = true;
+				enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex);
 				tapToStartManager.showTapToStart ();
 				timer.StartTimer ();
 				isAbleToMove = false;
