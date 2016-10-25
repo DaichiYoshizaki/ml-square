@@ -37,7 +37,16 @@ public class s_TransitionStage : MonoBehaviour
 				CheckString = Name.Substring (5, 2);
 				// 現在選択しているステージのIDの更新
 				ManagerSelectStage.TheCurrentlySelectStageID = int.Parse(CheckString); 
-				Debug.Log (ManagerSelectStage.TheCurrentlySelectStageID);
+				int c = int.Parse(CheckString); 
+				for( int v = 0; v < 3; v++ )
+				{
+					if( ManagerSelectStage.ItemAcquisitionRecord [(c-1)*3+v] == false )
+					{
+						ManagerSelectStage.ItemAcquisitionRecord [(c-1)*3+v] = true;
+						break;
+					}
+				}
+				Debug.Log (c);
 				break;
 			}
 			// Optionの場合
