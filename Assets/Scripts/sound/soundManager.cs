@@ -35,7 +35,7 @@ public class SoundManager : MonoBehaviour {
 	// SE
 	private AudioSource[] SEsources = new AudioSource[16];
 	// 音声
-	private AudioSource[] VoiceSources = new AudioSource[16];
+	private AudioSource[] MESources = new AudioSource[16];
 
 	// === AudioClip ===
 	// BGM
@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour {
 	// SE
 	public AudioClip[] SE;
 	// 音声
-	public AudioClip[] Voice;
+	public AudioClip[] ME;
 
 	void Awake (){
 		GameObject[] obj = GameObject.FindGameObjectsWithTag("SoundManager");
@@ -68,8 +68,8 @@ public class SoundManager : MonoBehaviour {
 		}
 
 		// 音声 AudioSource
-		for(int i = 0 ; i < VoiceSources.Length ; i++ ){
-			VoiceSources[i] = gameObject.AddComponent<AudioSource>();
+		for(int i = 0 ; i < MESources.Length ; i++ ){
+			MESources[i] = gameObject.AddComponent<AudioSource>();
 		}
 	}
 
@@ -79,7 +79,7 @@ public class SoundManager : MonoBehaviour {
 		foreach(AudioSource source in SEsources ){
 			source.mute = volume.Mute;
 		}
-		foreach(AudioSource source in VoiceSources ){
+		foreach(AudioSource source in MESources ){
 			source.mute = volume.Mute;
 		}
 
@@ -88,8 +88,8 @@ public class SoundManager : MonoBehaviour {
 		foreach(AudioSource source in SEsources ){
 			source.volume = volume.SE;
 		}
-		foreach(AudioSource source in VoiceSources ){
-			source.volume = volume.Voice;
+		foreach(AudioSource source in MESources ){
+			source.volume = volume.ME;
 		}
 	}
 
@@ -146,14 +146,14 @@ public class SoundManager : MonoBehaviour {
 
 	// ***** 音声再生 *****
 	// 音声再生
-	public void PlayVoice(int index){
-		if( 0 > index || Voice.Length <= index ){
+	public void PlayME(int index){
+		if( 0 > index || ME.Length <= index ){
 			return;
 		}
 		// 再生中で無いAudioSouceで鳴らす
-		foreach(AudioSource source in VoiceSources){
+		foreach(AudioSource source in MESources){
 			if( false == source.isPlaying ){
-				source.clip = Voice[index];
+				source.clip = ME[index];
 				source.Play();
 				return;
 			}
@@ -161,9 +161,9 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	// 音声停止
-	public void StopVoice(){
+	public void StopME(){
 		// 全ての音声用のAudioSouceを停止する
-		foreach(AudioSource source in VoiceSources){
+		foreach(AudioSource source in MESources){
 			source.Stop();
 			source.clip = null;
 		}  
@@ -173,13 +173,13 @@ public class SoundManager : MonoBehaviour {
 [Serializable]
 public class SoundVolume{
 	public float BGM = 1.0f;
-	public float Voice = 1.0f;
+	public float ME = 1.0f;
 	public float SE = 1.0f;
 	public bool Mute = false;
 
 	public void Init(){
 		BGM = 1.0f;
-		Voice = 1.0f;
+		ME = 1.0f;
 		SE = 1.0f;
 		Mute = false;
 	}

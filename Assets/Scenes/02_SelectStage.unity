@@ -5156,7 +5156,6 @@ GameObject:
   - 222: {fileID: 1282645798}
   - 114: {fileID: 1282645797}
   - 114: {fileID: 1282645796}
-  - 114: {fileID: 1282645799}
   m_Layer: 5
   m_Name: Stage04
   m_TagString: Untagged
@@ -5269,17 +5268,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282645794}
---- !u!114 &1282645799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1282645794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12ceddf3dfa7c419d96d7b19cd0daa51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1327776756
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,7 +7100,6 @@ GameObject:
   - 222: {fileID: 1834801133}
   - 114: {fileID: 1834801132}
   - 114: {fileID: 1834801131}
-  - 114: {fileID: 1834801134}
   m_Layer: 5
   m_Name: Stage02
   m_TagString: Untagged
@@ -7225,17 +7212,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1834801129}
---- !u!114 &1834801134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1834801129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12ceddf3dfa7c419d96d7b19cd0daa51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1837501557
 GameObject:
   m_ObjectHideFlags: 0
