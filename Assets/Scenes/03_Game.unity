@@ -1316,6 +1316,7 @@ Transform:
   - {fileID: 1689836317}
   - {fileID: 1986334077}
   - {fileID: 1305975494}
+  - {fileID: 1413988955}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!114 &455224903
@@ -2542,7 +2543,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDebugMode: 0
   stage: 0
-  AreaSelectIndex: 4
+  AreaSelectIndex: 0
 --- !u!114 &885779274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2582,6 +2583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameCamera: {fileID: 906809169}
   craneObject: {fileID: 2026599998}
+  enemyManager: {fileID: 1413988954}
   gameClearCanvas: {fileID: 46756239}
   panelObject: {fileID: 913350673}
 --- !u!114 &885779277
@@ -3806,6 +3808,46 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1341831428}
+--- !u!1 &1413988954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1413988955}
+  - 114: {fileID: 1413988956}
+  m_Layer: 0
+  m_Name: enemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1413988955
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1413988954}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.020004272, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 455224902}
+  m_RootOrder: 3
+--- !u!114 &1413988956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1413988954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae77ca5d80f04d9198d085a4d2b517d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1472821357
 GameObject:
   m_ObjectHideFlags: 0
