@@ -38,6 +38,7 @@ public class s_TransitionStage : MonoBehaviour
 				// 現在選択しているステージのIDの更新
 				ManagerSelectStage.TheCurrentlySelectStageID = int.Parse(CheckString); 
 				Debug.Log (ManagerSelectStage.TheCurrentlySelectStageID);
+				Fade.instance.FadeOut ("03_Game", 3, 2);
 				break;
 			}
 			// Optionの場合

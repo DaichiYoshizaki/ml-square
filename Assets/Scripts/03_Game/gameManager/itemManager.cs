@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class itemManager : MonoBehaviour {
 
-	static private List<bool> getItemOnStageIndex;
+	static public List<bool> getItemOnStageIndex;
 
 	static public void GetItem (){
 		getItemOnStageIndex[gameManager.currentStageIndex] = true;

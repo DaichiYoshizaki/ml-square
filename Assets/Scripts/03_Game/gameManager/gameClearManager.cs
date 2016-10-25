@@ -6,11 +6,11 @@ public class gameClearManager : MonoBehaviour {
 	private List<GameObject> stages = new List<GameObject>{null, null, null};
 	private List<GameObject> playerSpawn = new List<GameObject>{null, null, null};
 
-	private GameObject player;
-	public GameObject gameCamera;
-	public GameObject craneObject;
-	public GameObject enemyManager;
-	private crane crane;
+	private GameObject player;					//find用
+	public GameObject gameCamera;				//find用
+	public GameObject craneObject;				//find用
+	public GameObject enemyManager;				//find用
+	private crane crane;						//GetCompornentの入れ物
 
 	static private bool isAreaClear;
 	static private bool isStageClear;
@@ -101,6 +101,9 @@ public class gameClearManager : MonoBehaviour {
 			isAbleToMove = true;
 		} else if (crane.IsEndCrane && isAreaClear) {
 			open ();
+			for(int i = 0; i < 3; i++){
+				ManagerSelectStage.ItemAcquisitionRecord [ManagerSelectStage.TheCurrentlySelectStageID * 3 + i] = itemManager.getItemOnStageIndex [i];
+			}
 		}
 
 		if (isAbleToMove) {
