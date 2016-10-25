@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trignale : Enemy {
+public class Boss_right : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private bool isMovingVertical = true; // 縦移動/横移動の判定
 	private float moveSpeed = 0.05f; // 移動速度
-	private bool isAbleToMove = true; // 移動可能か否か（衝突時に使用）
+	private bool isAbleToAttack = false; // 攻撃可能か否か
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	public LayerMask groundLayer; // 障害物レイヤ
@@ -16,16 +16,18 @@ public class Trignale : Enemy {
 	private bool changeFlag = false; // 衝突時の方向転換判定
 	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
+	private BoxCollider2D getCollider; // Collider取得用
+	private Vector3 startPos; // 初期位置保存用
+	private int attackPhase = 0; // 攻撃のフェーズ
+	private int atkCnt = 0; // 攻撃回数カウント
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -34,13 +36,13 @@ public class Trignale : Enemy {
 	private bool IsHorizontalCollied(){
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
-			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.size.x * 0.5f + getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		else {
-			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.size.x * 0.5f - getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.size.x * 0.5f - getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		return false;
@@ -73,7 +75,7 @@ public class Trignale : Enemy {
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
 	}
-		
+
 	//プロパティ--------------------------------
 	public float MoveSpeed{
 		private set{moveSpeed = value;}
@@ -87,25 +89,66 @@ public class Trignale : Enemy {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		playerMover = GameObject.Find("gamePlayer");
 		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
-		// プレイヤーの位置から初期の向きを設定
-		ChkMovingWay( );
-		if(isFacingRight) {
-			enemySprite.sprite = SpriteList[0];
-		}
-		else {
-			enemySprite.sprite = SpriteList[1];
-		}
+		getCollider =  GetComponent<BoxCollider2D>( );
+		// 初期位置保存 手の落下地点は　初期値　x = 0（中央）　-初期値　の３点になる
+		startPos = transform.position;
 	}
 
 	void Update(){
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate ( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			switch(attackPhase) {
+			case 0: {
+					waitTime -= Time.deltaTime;
+					if(waitTime < 0.3f) {
+						enemySprite.sprite = SpriteList[1];
+					}
+					else if(waitTime < 0) {
+						isAbleToAttack = true;
+						attackPhase = 1;
+					}
+					break;
+				}
+			case 1: {
+					if(isAbleToAttack) {
+						transform.Translate(Vector3.down * moveSpeed);
+
+						if(IsVerticalCollied( ) ) {
+							isAbleToAttack = false;
+							waitTime = 1.0f;
+						}
+					}
+					else {
+						waitTime -= Time.deltaTime;
+						if(waitTime <= 0.5f) {
+							enemySprite.sprite = SpriteList[0];
+						}
+						else if(waitTime < 0) {
+							isAbleToAttack = true;
+						}
+					}
+
+					// とりあえずメモ
+					// 通常時
+					getCollider.size = new Vector3(5.9f, 2.8f, 0.0f);
+
+					// 攻撃時
+					getCollider.size = new Vector3(7.3f, 2.4f, 0.0f);
+
+					break;
+				}
+			case 2: {
+					
+					break;
+				}
+			}
+
+
+/*
 			// 縦移動時処理
 			if(isMovingVertical) {
 				// プレイヤーと軸が合うか障害物に衝突したら、上下移動をやめて横移動を開始する。
@@ -175,7 +218,7 @@ public class Trignale : Enemy {
 					// 衝突後の行動不可時間進行
 					waitTime -= Time.deltaTime;
 				}
-			}
+			}*/
 		}
 	}
 }

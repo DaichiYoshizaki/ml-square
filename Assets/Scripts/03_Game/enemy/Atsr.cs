@@ -2,14 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Atsr : MonoBehaviour {
+public class Atsr : Enemy {
 	private float rotSpeed = -5; // 回転速度
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
-
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
-	}
 
 	//プロパティ--------------------------------
 	public float RotSpeed{

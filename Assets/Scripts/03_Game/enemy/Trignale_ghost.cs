@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Trignale_ghost : MonoBehaviour {
+public class Trignale_ghost : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = true; // 上下どちらに移動するか判定
 	private Vector2 moveSpeed; // 移動速度
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	private GameObject playerMover; // プレイヤー情報取得用
-	static bool enemyPauseFlag = false; // ポーズ状態フラグ
 
 	// プレイヤーのいる方向取得
 	private void IsPlayerRightside( ) {
@@ -31,11 +30,6 @@ public class Trignale_ghost : MonoBehaviour {
 		else {
 			isMovingUp = true;
 		}
-	}
-
-	// ポーズ状態のON/OFF
-	static public void EnemyPauseChange( ) {
-		enemyPauseFlag = !enemyPauseFlag;
 	}
 
 	//プロパティ--------------------------------
