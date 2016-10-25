@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Riccle : MonoBehaviour {
+public class Riccle : Enemy {
 	private bool isFacingRight = true; // 向いている方向判定
 	private bool isMovingUp = false; // 上下どちらに移動するか判定
 	private float moveUpSpeed = 0.1f; // 上昇速度
@@ -14,14 +14,15 @@ public class Riccle : MonoBehaviour {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
+	private Vector3 colSize; // Colliderのサイズ取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * 0.75f, groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * 0.75f, groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -38,7 +39,6 @@ public class Riccle : MonoBehaviour {
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
 	}
-		
 
 	//プロパティ--------------------------------
 	public float MoveUpSpeed{
@@ -56,7 +56,10 @@ public class Riccle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
+		// Colliderのサイズ取得
+		colSize = GetComponent<CircleCollider2D>( ).bounds.size;
 	}
 
 	void Update(){
@@ -64,43 +67,58 @@ public class Riccle : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		// 上昇処理
-		if(isMovingUp) {
-			if(isAbleToMove) {
-				// 天井到達で2秒待機、落下モードに切り替え
-				if(IsVerticalCollied( )) {
-					isMovingUp = false;
-					isAbleToMove = false;
-					waitTime = 2;
+		// ポーズ状態では更新しない
+		if(!enemyPauseFlag) {
+			// 上昇処理
+			if(isMovingUp) {
+				if(isAbleToMove) {
+					// 移動
+					transform.Translate(Vector2.up * moveUpSpeed);
+
+					// 天井到達で2秒待機、落下モードに切り替え
+					if(IsVerticalCollied( )) {
+						// めり込み対策
+						while(IsVerticalCollied( ) ) {
+							transform.Translate(Vector3.down * 0.02f);
+						}
+
+						isMovingUp = false;
+						isAbleToMove = false;
+						waitTime = 2;
+					}
 				}
-				// 移動
-				transform.Translate(Vector2.up * moveUpSpeed);
+				else {
+					// 待機時間進行。0で行動開始
+					waitTime -= Time.deltaTime;
+					if(waitTime <= 0) {
+						isAbleToMove = true;
+					}
+				}
 			}
+			// 落下処理
 			else {
-				// 待機時間進行。0で行動開始
-				waitTime -= Time.deltaTime;
-				if(waitTime <= 0) {
-					isAbleToMove = true;
+				if(isAbleToMove) {
+					// 移動
+					transform.Translate(Vector2.down * moveDownSpeed);
+
+					// 地面衝突で1秒待機、昇降モードに切り替え
+					if(IsVerticalCollied( )) {
+						// 地面めり込み対策
+						while(IsVerticalCollied( ) ) {
+							transform.Translate(Vector3.up * 0.02f);
+						}
+
+						isMovingUp = true;
+						isAbleToMove = false;
+						waitTime = 1;
+					}
 				}
-			}
-		}
-		// 落下処理
-		else {
-			if(isAbleToMove) {
-				// 地面衝突で1秒待機、昇降モードに切り替え
-				if(IsVerticalCollied( )) {
-					isMovingUp = true;
-					isAbleToMove = false;
-					waitTime = 1;
-				}
-				// 移動
-				transform.Translate(Vector2.down * moveDownSpeed);
-			}
-			else {
-				// 待機時間進行。0で行動開始
-				waitTime -= Time.deltaTime;
-				if(waitTime <= 0) {
-					isAbleToMove = true;
+				else {
+					// 待機時間進行。0で行動開始
+					waitTime -= Time.deltaTime;
+					if(waitTime <= 0) {
+						isAbleToMove = true;
+					}
 				}
 			}
 		}

@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class gameClearManager : MonoBehaviour {
-	private List<GameObject> stages;
-	private List<GameObject> playerSpawn;
-	public GameObject player;
-	public GameObject camera;
+	private List<GameObject> stages = new List<GameObject>{null, null, null};
+	private List<GameObject> playerSpawn = new List<GameObject>{null, null, null};
+
+	private GameObject player;
+	public GameObject gameCamera;
 	public GameObject craneObject;
+	public GameObject enemyManager;
 	private crane crane;
+
 	static private bool isAreaClear;
 	static private bool isStageClear;
 
@@ -21,7 +24,7 @@ public class gameClearManager : MonoBehaviour {
 	static public bool isClosing = false;
 	public GameObject panelObject;
 	private RectTransform panelRt;
-	private bool isAbleToCameraMove = false;
+	private bool isAbleToMove = false;
 
 	static public bool IsAreaClear{
 		get{ return isAreaClear; }
@@ -35,15 +38,23 @@ public class gameClearManager : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		isStageClear = false;
 		isAreaClear = false;
-		isAbleToCameraMove = false;
+		isAbleToMove = false;
 		playerSpawn = new List<GameObject>{null, null, null};
+
+		stages [0] = GameObject.Find ("PauseObjects/area/gameStage1");
+		stages [1] = GameObject.Find ("PauseObjects/area/gameStage2");
+		stages [2] = GameObject.Find ("PauseObjects/area/gameStage3");
 
 		playerSpawn [0] = GameObject.Find ("gameStage1/spawnPoint");
 		playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
 		playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
+
+		player = GameObject.Find ("PauseObjects/gamePlayer");
+
+		gameCamera = GameObject.Find ("gameCamera");
 
 		//awake for Canvas
 		clearPanelAwake ();
@@ -53,6 +64,10 @@ public class gameClearManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (isStageClear && !isAreaClear) {
+			playerSpawn [0] = GameObject.Find ("gameStage1/spawnPoint");
+			playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
+			playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
+
 			gameManager.currentStageIndex++;
 			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 			Destroy (dummyPlayer.GetComponent<playerMover> ());
@@ -61,8 +76,10 @@ public class gameClearManager : MonoBehaviour {
 			dummyPlayer.name = "dummyPlayer";
 			dummyPlayer.transform.parent = null;
 			player.transform.position = playerSpawn [gameManager.currentStageIndex].transform.position;
+			player.transform.Translate(new Vector3(0f, 0f, 1f));
 			crane.IsStartCrane = true;
 			pauser.Pause ();
+			enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex - 1);
 			isStageClear = false;
 
 		}
@@ -81,21 +98,22 @@ public class gameClearManager : MonoBehaviour {
 		}
 		if (crane.IsEndCrane && !isAreaClear) {
 			crane.IsEndCrane = false;
-			isAbleToCameraMove = true;
+			isAbleToMove = true;
 		} else if (crane.IsEndCrane && isAreaClear) {
 			open ();
 		}
 
-		if (isAbleToCameraMove) {
-			camera.transform.Translate (Vector3.right * 10.0f * Time.deltaTime);
-			if (camera.transform.position.x > playerSpawn [gameManager.currentStageIndex].transform.position.x) {
-				camera.transform.position = new Vector3 (playerSpawn [gameManager.currentStageIndex].transform.position.x, camera.transform.position.y, 0f);
+		if (isAbleToMove) {
+			gameCamera.transform.Translate (Vector3.right * 10.0f * Time.deltaTime);
+			if (gameCamera.transform.position.x > stages [gameManager.currentStageIndex].transform.position.x) {
+				gameCamera.transform.position = new Vector3 (stages [gameManager.currentStageIndex].transform.position.x, gameCamera.transform.position.y, 0f);
 				pauser.Resume ();
 				pauser.Pause ();
 				player.GetComponent<playerMover> ().IsAwake = true;
+				enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex);
 				tapToStartManager.showTapToStart ();
 				timer.StartTimer ();
-				isAbleToCameraMove = false;
+				isAbleToMove = false;
 			}
 		}
 

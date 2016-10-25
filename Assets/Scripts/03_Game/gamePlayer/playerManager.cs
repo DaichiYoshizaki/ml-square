@@ -11,4 +11,16 @@ public class playerManager : MonoBehaviour {
 		set{ isDead = value;}
 		get{ return isDead;}
 	}
+	public void OnTriggerEnter2D(Collider2D col) {
+		if (col.tag == "enemy") {
+			isDead = true;
+			gameOverManager.open ();
+		}
+	}
+	public void OnCollisionEnter2D(Collision2D col){
+		if (col.transform.CompareTag("enemy")) {
+			isDead = true;
+			gameOverManager.open ();
+		}
+	}
 }
