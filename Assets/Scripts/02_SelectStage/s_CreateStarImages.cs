@@ -28,14 +28,21 @@ public class s_CreateStarImages : MonoBehaviour
 		float CanvasHeight = canvas.GetComponent<RectTransform>().rect.height ;
 
 		// 星を表示する
-		for (float i = -1; i < 2; i++) 
+		for( int i = 0; i < 3; i++) 
 		{
-			// 座標計算
-			Position.x = parent.transform.position.x + Size.x * ( i - 0.5f ) ;
-			Position.y = CanvasHeight - transform.position.y - parent.GetComponent<RectTransform>().rect.height/2 - Size.y;
+			int ID = int.Parse(transform.parent.name.Substring(5,2));
+			//Debug.Log (ID);
 
-			// テクスチャ描画
-			GUI.Label (	new Rect (Position.x, Position.y, Size.x, Size.y), labelTexture);
+			if ( ManagerSelectStage.ItemAcquisitionRecord [(ID-1) * 3 + i] == true ) 
+			{
+
+				// 座標計算
+				Position.x = parent.transform.position.x + Size.x * ((float)i - 1.5f);
+				Position.y = CanvasHeight - transform.position.y - parent.GetComponent<RectTransform> ().rect.height / 2 - Size.y;
+
+				// テクスチャ描画
+				GUI.Label (new Rect (Position.x, Position.y, Size.x, Size.y), labelTexture);
+			}
 		}
 
 	}
