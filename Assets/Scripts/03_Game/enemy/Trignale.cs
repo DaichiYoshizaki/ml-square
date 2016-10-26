@@ -15,6 +15,7 @@ public class Trignale : Enemy {
 	private float waitTime = 0; // 衝突時の待機時間
 	private bool changeFlag = false; // 衝突時の方向転換判定
 	private GameObject playerMover; // プレイヤー情報取得用
+	private GameObject spawnPoint; // プレイヤー開始地点取得用
 	private Vector3 oldPosition; // 前回位置保存用
 	private Vector3 colSize; // Colliderのサイズ取得用
 	private Vector2 colOffset; // Colliderのoffset取得用
@@ -69,6 +70,18 @@ public class Trignale : Enemy {
 		}
 	}
 
+	// プレイヤーのいる方向を取得してそちらに振り向く
+	private void IsSpawnRightside( ) {
+		if(spawnPoint.transform.position.x > transform.position.x) {
+			isFacingRight = true;
+			enemySprite.sprite = SpriteList[0];
+		}
+		else {
+			isFacingRight = false;
+			enemySprite.sprite = SpriteList[1];
+		}
+	}
+
 	//方向変換
 	public void ChangeFace(){
 		isFacingRight = !isFacingRight;
@@ -83,27 +96,23 @@ public class Trignale : Enemy {
 
 
 	// Use this for initialization
-	void Start () {
+	void Start( ) {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		playerMover = GameObject.Find("gamePlayer");
+		spawnPoint = transform.parent.transform.Find("spawnPoint").gameObject;
 		// Colliderのサイズ取得
 		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
 		colOffset = GetComponent<BoxCollider2D>( ).offset;
 		// プレイヤーの位置から初期の向きを設定
 		ChkMovingWay( );
-		if(isFacingRight) {
-			enemySprite.sprite = SpriteList[0];
-		}
-		else {
-			enemySprite.sprite = SpriteList[1];
-		}
+		IsSpawnRightside( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 縦移動時処理
