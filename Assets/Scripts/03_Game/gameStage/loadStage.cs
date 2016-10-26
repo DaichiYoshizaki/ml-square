@@ -15,7 +15,7 @@ public class loadStage : MonoBehaviour {
 		}
 
 		stageData item = Resources.Load ("stageData/stage" + stageIndex) as stageData;
-
+		if(item == null) item = Resources.Load ("stageData/stage0") as stageData;
 		foreach (EnemyDetail ed in item.entryEnemy){
 			GameObject obj;
 			GameObject[] stages = new GameObject[]{null, null, null};

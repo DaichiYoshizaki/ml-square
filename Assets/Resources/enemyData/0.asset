@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be2707d881f84d47b40e83c896bfc80, type: 3}
+  m_Name: 0
+  m_EditorClassIdentifier: 
+  enemyTexture: {fileID: 2800000, guid: dacfa8524c5794ea696b0ec199c4afd9, type: 3}
+  enemyName: "\u30C8\u30EA\u30B4\u30CA\u30EB"
+  enemyIntro: "\u3075\u308F\u3075\u308F\u6D6E\u3044\u3066\u308B\u7720\u305D\u3046\u306A\u3084\u3064\u3002
+    \u3084\u308B\u6C17\u306F\u306A\u3044\u3051\u3069\u3001\u306A\u305C\u3060\u304B\u6A2A\u79FB\u52D5\u306F\u3059\u3063\u3054\u304F\u65E9\u3044\u305E\u3002"
