@@ -8,6 +8,9 @@ public class menuManager : MonoBehaviour {
 	static public bool isShowMenu = false;
 	static public bool isOpening = false;
 	static public bool isClosing = false;
+
+	static public bool isAbleOpen = true;
+
 	public GameObject panelObject;
 	private RectTransform panelRt;
 
@@ -44,13 +47,13 @@ public class menuManager : MonoBehaviour {
 		}
 	}
 	static public void open(){
-		if (!isOpening && !isClosing) {
+		if (!isOpening && !isClosing && isAbleOpen) {
 			isOpening = true;
 			canvas.enabled = true;
 		}
 	}
 	static public void close(){
-		if (!isOpening && !isClosing)
+		if (!isOpening && !isClosing && !isAbleOpen)
 			isClosing = true;	
 	}
 }

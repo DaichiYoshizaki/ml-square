@@ -88,6 +88,7 @@ public class playerMover : MonoBehaviour {
 		isFacingRight = true;
 		isAbleToMove = true;
 		isHighJump = false;
+
 	}
 
 	void Update(){
@@ -95,11 +96,11 @@ public class playerMover : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-
 		if (isAwake) {
 			Start();
 			rb2d.velocity = new Vector3 (0f, 0f, 0f);
 			isAwake = false;
+
 		}
 
 		isAbleToJump = false;
@@ -108,6 +109,8 @@ public class playerMover : MonoBehaviour {
 
 		if (IsGrounded ()) {
 			isAbleToJump = true;
+		} else {
+			isAbleToMove = true;
 		}
 
 		//壁にぶつかった時
@@ -154,5 +157,8 @@ public class playerMover : MonoBehaviour {
 			itemManager.GetItem();
 			Destroy(col.gameObject);
 		}
+	}
+	public void playerVisualReset(){
+		playerSprite.sprite = SpriteList [0];
 	}
 }

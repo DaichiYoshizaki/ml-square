@@ -16,7 +16,7 @@ public class gameManager : MonoBehaviour {
 	static public int areaSelectIndex;
 	void Awake(){
 		
-		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID);
+		loadStage.Load (AreaSelectIndex);
 	}
 
 	// Use this for initialization
@@ -50,8 +50,5 @@ public class gameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isDebugMode) {
-			timer.CountTime = 100;
-		}
 	}
 }
