@@ -37,7 +37,7 @@ public class Srauqe_tri : Enemy {
 
 	// プレイヤーが一定距離以内にいるならジャンプする
 	private bool ChkDistance( ) {
-		if(Mathf.Abs(playerMover.transform.position.x - transform.position.x) < 2f) {
+		if(Mathf.Abs(playerMover.transform.position.x - transform.position.x) < 2.2f) {
 			return true;
 		}
 		return false;
