@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start( ) {
 		FindEnemy( );
-		PauseEnemy(0);
+		PauseEnemy(gameManager.currentStageIndex);
 	}
 	
 	// Update is called once per frame
