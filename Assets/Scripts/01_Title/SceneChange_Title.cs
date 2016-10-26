@@ -11,7 +11,7 @@ public class SceneChange_Title : MonoBehaviour {
 	void Update () {
 		if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
 		{
-			Fade.instance.FadeOut("03_Game", 3, 1);
+			Fade.instance.FadeOut("02_SelectStage", 3, 1);
 		}
 	}
 }
