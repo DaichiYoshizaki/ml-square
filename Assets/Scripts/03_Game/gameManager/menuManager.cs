@@ -53,7 +53,7 @@ public class menuManager : MonoBehaviour {
 		}
 	}
 	static public void close(){
-		if (!isOpening && !isClosing && !isAbleOpen)
+		if (!isOpening && !isClosing)
 			isClosing = true;	
 	}
 }

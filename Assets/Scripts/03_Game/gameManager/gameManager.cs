@@ -8,7 +8,6 @@ public class gameManager : MonoBehaviour {
 	private GameObject gameCamera;
 	private List<GameObject> stages = new List<GameObject>{null, null, null};
 	private List<GameObject> playerSpawn = new List<GameObject>{null, null, null};
-	private timer timer;
 	static public int currentStageIndex = 0;
 	public bool isDebugMode = false;
 	public int stage = 0;
@@ -39,8 +38,6 @@ public class gameManager : MonoBehaviour {
 		gameCamera = GameObject.Find ("gameCamera");
 
 		player.transform.position = playerSpawn [0].transform.position;
-
-		timer = timerObject.GetComponent<timer> ();
 
 		if (isDebugMode) {
 			player.transform.position = playerSpawn [stage].transform.position;
