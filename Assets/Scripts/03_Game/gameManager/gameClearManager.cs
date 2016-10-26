@@ -15,6 +15,9 @@ public class gameClearManager : MonoBehaviour {
 	static private bool isAreaClear;
 	static private bool isStageClear;
 
+	static public bool isAbleToOpen = true;
+
+
 	//for canvas
 	public GameObject gameClearCanvas;
 	static private Canvas canvas;
@@ -68,6 +71,8 @@ public class gameClearManager : MonoBehaviour {
 			playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
 			playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
 
+			menuManager.isAbleOpen = false;
+
 			gameManager.currentStageIndex++;
 			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 			Destroy (dummyPlayer.GetComponent<playerMover> ());
@@ -75,6 +80,7 @@ public class gameClearManager : MonoBehaviour {
 			dummyPlayer.GetComponent<Collider2D> ().isTrigger = true;
 			dummyPlayer.name = "dummyPlayer";
 			dummyPlayer.transform.parent = null;
+			player.GetComponent<playerMover> ().playerVisualReset ();
 			player.transform.position = playerSpawn [gameManager.currentStageIndex].transform.position;
 			player.transform.Translate(new Vector3(0f, 0f, 1f));
 			crane.IsStartCrane = true;
@@ -84,6 +90,9 @@ public class gameClearManager : MonoBehaviour {
 
 		}
 		else if (isStageClear && isAreaClear) {
+
+			menuManager.isAbleOpen = false;
+
 			gameManager.currentStageIndex++;
 			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 			Destroy (dummyPlayer.GetComponent<playerMover> ());
@@ -91,6 +100,7 @@ public class gameClearManager : MonoBehaviour {
 			dummyPlayer.GetComponent<Collider2D> ().isTrigger = true;
 			dummyPlayer.name = "dummyPlayer";
 			dummyPlayer.transform.parent = null;
+			player.GetComponent<playerMover> ().playerVisualReset ();
 			Destroy (player);
 			crane.IsStartCrane = true;
 			pauser.Pause ();
@@ -117,6 +127,7 @@ public class gameClearManager : MonoBehaviour {
 				tapToStartManager.showTapToStart ();
 				timer.StartTimer ();
 				isAbleToMove = false;
+				isAbleToOpen = false;
 			}
 		}
 
@@ -158,7 +169,8 @@ public class gameClearManager : MonoBehaviour {
 		}
 	}
 	static public void open(){
-		if (!isOpening && !isClosing) {
+		if (!isOpening && !isClosing && isAbleToOpen) {
+			menuManager.close ();
 			isOpening = true;
 			canvas.enabled = true;
 		}
@@ -167,4 +179,5 @@ public class gameClearManager : MonoBehaviour {
 		if (!isOpening && !isClosing)
 			isClosing = true;	
 	}
+
 }
