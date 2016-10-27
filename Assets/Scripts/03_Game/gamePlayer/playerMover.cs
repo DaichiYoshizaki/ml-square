@@ -172,18 +172,19 @@ public class playerMover : MonoBehaviour {
 	public void playerVisualReset(){
 		playerSprite.sprite = SpriteList [0];
 		transform.rotation = Quaternion.Euler (0, 0, 0);
-		playerSprite.color = new Color (0f, 0f, 0f);
+		playerSprite.color = new Color (1f, 1f, 1f);
 	}
+
 	public void OnCollisionEnter2D(Collision2D col){
 		if (col.transform.CompareTag ("enemy")) {
 			SoundManager.Instance.PlaySE (2);
 			pauser.Pause ();
 			if (isFacingRight) {
 				playerSprite.sprite = SpriteList [5];
-				transform.rotation = Quaternion.Euler (0, 0, 45);
+				transform.rotation = Quaternion.Euler (0, 0, 45f);
 			} else {
 				playerSprite.sprite = SpriteList [4];
-				transform.rotation = Quaternion.Euler (0, 0, -45);
+					transform.rotation = Quaternion.Euler (0, 0, -45f);
 			}
 		}
 	}
