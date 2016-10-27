@@ -14,7 +14,7 @@ public class gameManager : MonoBehaviour {
 	static public int areaSelectIndex;
 	void Awake(){
 		
-		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID);
+		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID - 1);
 	}
 
 	// Use this for initialization
