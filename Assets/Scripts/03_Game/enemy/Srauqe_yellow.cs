@@ -94,6 +94,13 @@ public class Srauqe_yellow : Enemy {
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
 
+				// 横方向に壁やフィールドにぶつかったら、横方向の移動量を0に
+				if(IsHorizontalCollied( ) ) {
+					while(IsHorizontalCollied( )) {
+						transform.Translate(new Vector3(moveSpeed, 0.0f, 0.0f) * -0.2f);
+					}
+					moveSpeed = 0;
+				}
 				// 着地したら2秒待機
 				if(IsVerticalCollied( ) ) {
 					if(jumpSpeed < 0) {
@@ -110,11 +117,6 @@ public class Srauqe_yellow : Enemy {
 					else {
 						jumpSpeed = 0;
 					}
-				}
-
-				// 壁やフィールドにぶつかったら、横方向の移動量を0に
-				if(IsHorizontalCollied( ) ) {
-					moveSpeed = 0;
 				}
 			}
 			else {

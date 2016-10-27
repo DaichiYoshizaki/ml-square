@@ -105,6 +105,7 @@ public class gameClearManager : MonoBehaviour {
 			Destroy (player);
 			crane.IsStartCrane = true;
 			pauser.Pause ();
+			enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex - 1);
 			isStageClear = false;
 		}
 		if (crane.IsEndCrane && !isAreaClear) {
