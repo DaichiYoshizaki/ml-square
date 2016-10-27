@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class gameManager : MonoBehaviour {
-	private GameObject timerObject;
 	private GameObject player;
 	private GameObject gameCamera;
 	private List<GameObject> stages = new List<GameObject>{null, null, null};
@@ -15,7 +14,7 @@ public class gameManager : MonoBehaviour {
 	static public int areaSelectIndex;
 	void Awake(){
 		
-		loadStage.Load (AreaSelectIndex);
+		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID);
 	}
 
 	// Use this for initialization
@@ -33,15 +32,15 @@ public class gameManager : MonoBehaviour {
 
 		player = GameObject.Find ("PauseObjects/gamePlayer");
 
-		timerObject = GameObject.Find ("PauseObjects/timerManager");
-
 		gameCamera = GameObject.Find ("gameCamera");
 
 		player.transform.position = playerSpawn [0].transform.position;
 
+		SoundManager.Instance.PlayBGM (1);
+
 		if (isDebugMode) {
-			player.transform.position = playerSpawn [stage].transform.position;
-			gameCamera.transform.position = new Vector3 (stages [stage].transform.position.x, gameCamera.transform.position.y, gameCamera.transform.position.z);
+			player.transform.position = playerSpawn [areaSelectIndex].transform.position;
+			gameCamera.transform.position = new Vector3 (stages [areaSelectIndex].transform.position.x, gameCamera.transform.position.y, gameCamera.transform.position.z);
 		}
 	}
 

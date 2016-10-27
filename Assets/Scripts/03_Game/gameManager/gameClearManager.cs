@@ -34,9 +34,13 @@ public class gameClearManager : MonoBehaviour {
 	}
 
 	static public void stageClear(){
+		
 		isStageClear = true;
+		SoundManager.Instance.PlaySE (5);
 		if (gameManager.currentStageIndex == 2) {
 			isAreaClear = true;
+			SoundManager.Instance.StopBGM ();
+			SoundManager.Instance.PlayME (1);
 		}
 	}
 
@@ -90,9 +94,6 @@ public class gameClearManager : MonoBehaviour {
 
 		}
 		else if (isStageClear && isAreaClear) {
-
-			menuManager.isAbleOpen = false;
-
 			gameManager.currentStageIndex++;
 			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 			Destroy (dummyPlayer.GetComponent<playerMover> ());
@@ -114,6 +115,7 @@ public class gameClearManager : MonoBehaviour {
 			for(int i = 0; i < 3; i++){
 				ManagerSelectStage.ItemAcquisitionRecord [ManagerSelectStage.TheCurrentlySelectStageID * 3 + i] = itemManager.getItemOnStageIndex [i];
 			}
+			crane.IsEndCrane = false;
 		}
 
 		if (isAbleToMove) {
@@ -169,15 +171,17 @@ public class gameClearManager : MonoBehaviour {
 		}
 	}
 	static public void open(){
-		if (!isOpening && !isClosing && isAbleToOpen) {
+		if (!isOpening && !isClosing) {
 			menuManager.close ();
 			isOpening = true;
 			canvas.enabled = true;
 		}
 	}
 	static public void close(){
-		if (!isOpening && !isClosing)
-			isClosing = true;	
+		if (!isOpening && !isClosing) {
+			isClosing = true;
+			SoundManager.Instance.StopME ();
+		}
 	}
 
 }

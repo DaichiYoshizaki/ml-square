@@ -48,7 +48,7 @@ public class playerMover : MonoBehaviour {
 			if (isAbleToJump) {
 				rb2d.AddForce (Vector2.up * jumpPower);
 				isAbleToJump = false;
-
+				SoundManager.Instance.PlaySE(1);
 			}
 		}
 	}
@@ -115,8 +115,10 @@ public class playerMover : MonoBehaviour {
 
 		//壁にぶつかった時
 
-		if (isWallCollied ())
+		if (isWallCollied ()) {
 			changeFace ();
+			SoundManager.Instance.PlaySE (3);
+		}
 
 		//もし移動ができるならば
 
@@ -155,10 +157,34 @@ public class playerMover : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D col){
 		if(col.CompareTag("item")){
 			itemManager.GetItem();
+			SoundManager.Instance.PlaySE (4);
 			Destroy(col.gameObject);
+		}
+		if (col.CompareTag ("enemy")) {
+			pauser.Pause ();
+			if (isFacingRight) {
+				playerSprite.sprite = SpriteList [5];
+			} else {
+				playerSprite.sprite = SpriteList [4];
+			}
 		}
 	}
 	public void playerVisualReset(){
 		playerSprite.sprite = SpriteList [0];
+		transform.rotation = Quaternion.Euler (0, 0, 0);
+		playerSprite.color = new Color (0f, 0f, 0f);
+	}
+	public void OnCollisionEnter2D(Collision2D col){
+		if (col.transform.CompareTag ("enemy")) {
+			SoundManager.Instance.PlaySE (2);
+			pauser.Pause ();
+			if (isFacingRight) {
+				playerSprite.sprite = SpriteList [5];
+				transform.rotation = Quaternion.Euler (0, 0, 45);
+			} else {
+				playerSprite.sprite = SpriteList [4];
+				transform.rotation = Quaternion.Euler (0, 0, -45);
+			}
+		}
 	}
 }

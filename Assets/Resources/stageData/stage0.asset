@@ -29,7 +29,7 @@ MonoBehaviour:
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: spawnPoint
     stageIndex: 1
-    enemy_pos: {x: 17.82, y: -3.58, z: 0}
+    enemy_pos: {x: 17.3, y: -3.58, z: 0}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: field

@@ -11,6 +11,7 @@ public class jumpButton : MonoBehaviour {
 		if (playerMover.IsAbleToJump) {
 			push = true;
 			playerMover.IsAbleToMove = false;
+			SoundManager.Instance.PlaySE(0);
 		}
 	}
 

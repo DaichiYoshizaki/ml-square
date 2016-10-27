@@ -47,11 +47,18 @@ public class gameOverManager : MonoBehaviour {
 			isOpening = true;
 			canvas.enabled = true;
 			pauser.Pause ();
+			SoundManager.Instance.StopBGM ();
+			float currentME = SoundManager.Instance.volume.ME;//少し大きいので戻すために保存
+			SoundManager.Instance.volume.ME /= 5f;
+			SoundManager.Instance.PlayME (0);
+			SoundManager.Instance.volume.ME = currentME;
 		}
 	}
 	static public void close(){
-		if (!isOpening && !isClosing)
+		if (!isOpening && !isClosing) {
 			isClosing = true;	
+			SoundManager.Instance.StopME ();
+		}
 	}
 
 }
