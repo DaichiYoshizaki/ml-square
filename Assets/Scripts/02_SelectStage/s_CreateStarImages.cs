@@ -31,7 +31,6 @@ public class s_CreateStarImages : MonoBehaviour
 		for( int i = 0; i < 3; i++) 
 		{
 			int ID = int.Parse(transform.parent.name.Substring(5,2));
-			//Debug.Log (ID);
 
 			if ( ManagerSelectStage.ItemAcquisitionRecord [(ID-1) * 3 + i] == true ) 
 			{
