@@ -125,6 +125,7 @@ public class Boss_right : Enemy {
 								isAbleToAttack = false;
 								waitTime = 1.0f;
 								changeFlag = true;
+								SoundManager.Instance.PlaySE(1);
 							}
 						}
 					}
