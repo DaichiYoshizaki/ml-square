@@ -4,7 +4,9 @@ using UnityEditor;
 #endif
 using System.Collections;
 
+#if UNITY_EDITOR
 [InitializeOnLoad]
+#endif
 public class gameSaveData : ScriptableObject
 {
 	// 最新攻略ステージ
