@@ -48,13 +48,15 @@ public class s_TransitionStage : MonoBehaviour
 			// Optionの場合
 			if (CheckString == "Option") 
 			{
-				Debug.Log (Name);
+				// フェード
+				//Fade.instance.FadeOut ("03", 3,3 );
 				break;
 			}
 			// EnemyListの場合
 			if (CheckString == "EnemyList") 
 			{
-				Debug.Log (Name);
+				// フェード
+				Fade.instance.FadeOut ("04_EnemyList", 3,3 );
 				break;
 			}
 
