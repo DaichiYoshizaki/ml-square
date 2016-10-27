@@ -75,6 +75,8 @@ public class Trignale_red : Enemy {
 				ChangeUpDown( );
 				isAbleToMove = false;
 				oldPosition.x += 1; // 衝突後の待機状態が終わった時点でoldPosition == positionを満たしてしまうため、数値をずらしておく
+				// SE再生
+				SoundManager.Instance.PlaySE(3);
 			}
 
 			//もし移動ができるならば

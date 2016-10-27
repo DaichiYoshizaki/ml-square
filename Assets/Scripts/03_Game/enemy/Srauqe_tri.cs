@@ -32,6 +32,8 @@ public class Srauqe_tri : Enemy {
 		if (isAbleToJump) {
 			jumpSpeed = jumpPower;
 			isAbleToJump = false;
+			// SE再生
+			SoundManager.Instance.PlaySE(1);
 		}
 	}
 

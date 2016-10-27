@@ -136,7 +136,7 @@ public class Boss_left : Enemy {
 								transform.Rotate(0.0f, 0.0f, 180.0f);
 								atkCnt++;
 							}
-							// 方向転換後、初期位置の1.5倍の距離まで移動したら処理終了。上と同じく中央に配置すると途中で止まって消えるよ
+							// 方向転換後、中央〜初期位置の1.5倍の距離まで移動したら処理終了。上と同じく中央に配置すると途中で止まって消えるよ
 							else if(atkCnt != 0 && ( (startPos.x > 0 && transform.position.x > startPos.x * 1.5f) || (startPos.x < 0 && transform.position.x < startPos.x * 1.5f) ) ) {
 								attackPhase = 0;
 								atkCnt = 0;
