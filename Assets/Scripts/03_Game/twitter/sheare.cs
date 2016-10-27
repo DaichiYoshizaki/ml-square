@@ -21,7 +21,7 @@ public class sheare : MonoBehaviour {
 
 		// インジケーター表示
 		#if UNITY_IPHONE
-		Handheld.SetActivityIndicatorStyle(iOSActivityIndicatorStyle.White);
+		Handheld.SetActivityIndicatorStyle(UnityEngine.iOS.ActivityIndicatorStyle.White);
 		#elif UNITY_ANDROID
 		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
 		#endif
