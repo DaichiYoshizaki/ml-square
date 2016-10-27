@@ -13,7 +13,7 @@ public class SceneChange_Title : MonoBehaviour {
 		{
 			SoundManager.Instance.PlaySE (0);
 			SoundManager.Instance.StopBGM ();
-			Fade.instance.FadeOut("03_Game", 3, 1);
+			Fade.instance.FadeOut("02_SelectStage", 3, 1);
 		}
 	}
 }
