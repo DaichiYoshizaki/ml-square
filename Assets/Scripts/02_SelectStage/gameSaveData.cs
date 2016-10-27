@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections;
 
 [InitializeOnLoad]
@@ -15,6 +17,7 @@ public class gameSaveData : ScriptableObject
 	// SE
 	public int Se;
 }
+#if UNITY_EDITOR
 public static class CreateSaveData
 {
 	public static  void Create(string stageName, bool[] ItemRcord, int BGM, int SE)
@@ -39,7 +42,7 @@ public static class CreateSaveData
 
 	}
 }
-
+#endif
 // ゲームセーブデータの操作
 public static class GameSaveDataOperation
 {

@@ -61,6 +61,8 @@ public class s_TransitionStage : MonoBehaviour
 			}
 
 		}
+		SoundManager.Instance.PlaySE (0);
+		SoundManager.Instance.StopBGM ();
 
 	}
 

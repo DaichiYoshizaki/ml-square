@@ -26,7 +26,8 @@ public class ManagerSelectStage : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		GameSaveDataOperation.LoadGameSaveDataAll ();;
+		GameSaveDataOperation.LoadGameSaveDataAll ();
+		SoundManager.Instance.PlayBGM (0);
 	}
 
 }
