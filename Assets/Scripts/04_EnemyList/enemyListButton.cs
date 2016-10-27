@@ -27,7 +27,7 @@ public class enemyListButton : MonoBehaviour {
 	}
 	public void Onclick(int id){
 		if (beAbleTap){
-			Debug.Log (id);
+			SoundManager.Instance.PlaySE(0);
 			GameObject.Find ("EnemyListImage").GetComponent<Image> ().sprite = Sprite.Create (ed.enemyTexture, new Rect (0f, 0f, ed.enemyTexture.width, ed.enemyTexture.height), Vector2.zero);
 			GameObject.Find ("enemyInfoPanel/enemyInfoNamePanel/enemyInfoNamePanelText").GetComponent<Text> ().text = ed.enemyName;
 			GameObject.Find ("enemyInfoPanel/enemyInfoIntroPanel/enemyInfoIntroPanelText").GetComponent<Text> ().text = ed.enemyIntro;

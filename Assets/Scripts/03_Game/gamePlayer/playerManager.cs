@@ -14,13 +14,16 @@ public class playerManager : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D col) {
 		if (col.tag == "enemy") {
 			isDead = true;
-			gameOverManager.open ();
+			Invoke("openGameOver", 0.5f);
 		}
 	}
 	public void OnCollisionEnter2D(Collision2D col){
 		if (col.transform.CompareTag("enemy")) {
 			isDead = true;
-			gameOverManager.open ();
+			Invoke("openGameOver", 0.5f);
 		}
+	}
+	private void openGameOver(){
+		gameOverManager.open ();
 	}
 }

@@ -15,5 +15,6 @@ public class toggleFaceButton : MonoBehaviour {
 	// Update is called once per frame
 	public void OnClick () {
 		playerMover.changeFace ();
+		SoundManager.Instance.PlaySE(0);
 	}
 }

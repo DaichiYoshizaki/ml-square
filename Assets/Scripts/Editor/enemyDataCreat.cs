@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class enemyDataCreat : MonoBehaviour {
+	[MenuItem("CreateEnemyData/Create")]
+	static public void EnemyDataCreate(){
+		for (int i = 0; i < 12; i++) {
+			enemyData ed = ScriptableObject.CreateInstance<enemyData> ();
+			string path = AssetDatabase.GenerateUniqueAssetPath ("Assets/Resources/enemyData/" + i + ".asset");
 
-	// Use this for initialization
-	void Start () {
-	
+			AssetDatabase.CreateAsset(ed, path);
+			AssetDatabase.SaveAssets();
+
+			EditorUtility.FocusProjectWindow();
+			Selection.activeObject = ed;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

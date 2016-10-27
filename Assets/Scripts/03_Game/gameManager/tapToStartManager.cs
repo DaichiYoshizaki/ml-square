@@ -48,6 +48,7 @@ public class tapToStartManager : MonoBehaviour {
 			if (Input.GetMouseButtonDown (0)) {
 				isShowTapToStart = false;
 				isClosing = true;
+				SoundManager.Instance.PlaySE(0);
 			}
 
 			if (Input.touchCount > 0) {
@@ -58,6 +59,7 @@ public class tapToStartManager : MonoBehaviour {
 				if (touch.phase == TouchPhase.Began) {
 					isShowTapToStart = false;
 					isClosing = true;
+					SoundManager.Instance.PlaySE(0);
 				}			
 			}
 		}

@@ -123,6 +123,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5485c928b292c438bb3c9d510e6f7c37, type: 3}
   - {fileID: 21300000, guid: 6799fb5ea04a74b9e8670de92cbb3bf2, type: 3}
   - {fileID: 21300000, guid: 46e93d9cd4e1f4e9daa4e15dc748029a, type: 3}
+  - {fileID: 21300000, guid: 46e93d9cd4e1f4e9daa4e15dc748029a, type: 3}
+  - {fileID: 21300000, guid: 46e93d9cd4e1f4e9daa4e15dc748029a, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

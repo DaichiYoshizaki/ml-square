@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 7440ef6df9f88494c81860cfcd8acea3, type: 2}
   id: 10
-  spawnAreaIndex: 3
+  spawnAreaIndex: 0
 --- !u!1 &200891867
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: d7c9baef59f3a4a92a7836d1f76d3c50, type: 2}
   id: 6
-  spawnAreaIndex: 30
+  spawnAreaIndex: 0
 --- !u!1 &568817983
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 173f702ca2a874e809a613993ba40ce6, type: 2}
   id: 4
-  spawnAreaIndex: 24
+  spawnAreaIndex: 0
 --- !u!1 &875451081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 914a3553aec474a27b3b7c7590e34637, type: 2}
   id: 7
-  spawnAreaIndex: 20
+  spawnAreaIndex: 7
 --- !u!1 &1095932553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,7 +1647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: d702f32a026ee4ef3a862817964bc06e, type: 2}
   id: 5
-  spawnAreaIndex: 25
+  spawnAreaIndex: 0
 --- !u!1 &1098225208
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,7 +1784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: cdae9ead085464019bc293df96341890, type: 2}
   id: 3
-  spawnAreaIndex: 5
+  spawnAreaIndex: 3
 --- !u!1 &1113217188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,7 +1995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 6a2ff7249a37940f5943114e117821e1, type: 2}
   id: 11
-  spawnAreaIndex: 34
+  spawnAreaIndex: 0
 --- !u!1 &1277780980
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,7 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 066c0bcac1e904098b339188c314e1a5, type: 2}
   id: 2
-  spawnAreaIndex: 5
+  spawnAreaIndex: 2
 --- !u!1 &1531489263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,6 +2657,7 @@ GameObject:
   - 222: {fileID: 1601623428}
   - 114: {fileID: 1601623427}
   - 114: {fileID: 1601623426}
+  - 114: {fileID: 1601623430}
   - 114: {fileID: 1601623429}
   m_Layer: 5
   m_Name: EnemyListButton
@@ -2723,7 +2724,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1601623429}
+      - m_Target: {fileID: 0}
         m_MethodName: Onclick
         m_Mode: 3
         m_Arguments:
@@ -2770,6 +2771,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1601623424}
 --- !u!114 &1601623429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1601623424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa760736b7074dd9925d7ffb0c8264a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ed: {fileID: 0}
+  id: 0
+  spawnAreaIndex: 0
+--- !u!114 &1601623430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2919,7 +2934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 4b588502712b5414aaa8c4b5a50e8e10, type: 2}
   id: 9
-  spawnAreaIndex: 5
+  spawnAreaIndex: 0
 --- !u!1 &1906527090
 GameObject:
   m_ObjectHideFlags: 0
@@ -3056,7 +3071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: 64ff32ee456354c138228b43955142b8, type: 2}
   id: 8
-  spawnAreaIndex: 24
+  spawnAreaIndex: 0
 --- !u!1 &1938366226
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,7 +3208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ed: {fileID: 11400000, guid: f98ab77155a4e4ffb98fe5a0407ba363, type: 2}
   id: 1
-  spawnAreaIndex: 5
+  spawnAreaIndex: 1
 --- !u!1 &2014968808
 GameObject:
   m_ObjectHideFlags: 0

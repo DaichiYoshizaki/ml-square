@@ -47,7 +47,7 @@ public class menuManager : MonoBehaviour {
 		}
 	}
 	static public void open(){
-		if (!isOpening && !isClosing && isAbleOpen) {
+		if (!isOpening && !isClosing) {
 			isOpening = true;
 			canvas.enabled = true;
 		}
