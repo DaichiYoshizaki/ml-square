@@ -7,22 +7,26 @@ using System.Collections;
 public class ManagerSelectStage : MonoBehaviour 
 {
 	// アイテム取得数最大 ( ステージ数 * アイテム数 )
-	const int ItemAcquisitionNumMax  = 33*3;
+	public const int ItemAcquisitionNumMax  = 33*3;
 
 	// 現在選択しているステージのID
 	public static int TheCurrentlySelectStageID = 0;
+
 	// アイテム取得履歴
 	public static bool[] ItemAcquisitionRecord =  new bool[ItemAcquisitionNumMax];
+
+	// 最新攻略ステージ
+	public static string LatestCaptureStage = "Stage01";
+
+	// BGM
+	public static int Bgm;
+	// SE
+	public static int Se;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		GameSaveDataOperation.LoadGameSaveDataAll ();;
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
+
 }
