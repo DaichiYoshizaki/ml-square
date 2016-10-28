@@ -12,8 +12,17 @@ public class gameManager : MonoBehaviour {
 	public int stage = 0;
 	public int AreaSelectIndex = 0;
 	static public int areaSelectIndex;
+	public bool isTutorial = false;
+	static public bool IsTutorial = false;
+
 	void Awake(){
-		
+		IsTutorial = isTutorial;
+		if (isTutorial) {
+			
+		}
+		if (isDebugMode) {
+			ManagerSelectStage.TheCurrentlySelectStageID = AreaSelectIndex;
+		}
 		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID - 1);
 	}
 
