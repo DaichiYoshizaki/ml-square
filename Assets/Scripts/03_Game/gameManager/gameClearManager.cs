@@ -73,7 +73,22 @@ public class gameClearManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (isStageClear && !isAreaClear) {
+		if(isStageClear && ManagerSelectStage.TheCurrentlySelectStageID == 7){
+			gameManager.currentStageIndex++;
+			GameObject dummyPlayer = (GameObject)Instantiate(player, player.transform.position, new Quaternion(0f, 0f, 0f, 0f));
+			Destroy (dummyPlayer.GetComponent<playerMover> ());
+			dummyPlayer.GetComponent<Rigidbody2D> ().isKinematic = true;
+			dummyPlayer.GetComponent<Collider2D> ().isTrigger = true;
+			dummyPlayer.name = "dummyPlayer";
+			dummyPlayer.transform.parent = null;
+			player.GetComponent<playerMover> ().playerVisualReset ();
+			Destroy (player);
+			crane.IsStartCrane = true;
+			pauser.Pause ();
+			enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex - 1);
+			isStageClear = false;
+		}
+		else if (isStageClear && !isAreaClear) {
 			playerSpawn [0] = GameObject.Find ("gameStage1/spawnPoint");
 			playerSpawn [1] = GameObject.Find ("gameStage2/spawnPoint");
 			playerSpawn [2] = GameObject.Find ("gameStage3/spawnPoint");
@@ -111,20 +126,54 @@ public class gameClearManager : MonoBehaviour {
 			enemyManager.GetComponent<Enemy>( ).PauseEnemy(gameManager.currentStageIndex - 1);
 			isStageClear = false;
 		}
-		if (crane.IsEndCrane && !isAreaClear) {
+
+		if (crane.IsEndCrane && ManagerSelectStage.TheCurrentlySelectStageID == 7) {
+
+				// 使う前に setlabel を呼んどく。
+				DialogManager.Instance.SetLabel("Yes", "No", "Close");
+				//
+				// YES NO ダイアログ
+				DialogManager.Instance.ShowSubmitDialog(
+					"クリアおめでとうございます、体験版はここまでになります。",
+				(bool result) => { if(result){ Fade.instance.FadeOut("00_Logo_00", 3f, 1f); } }
+				);
+
+
+		}
+		else if (crane.IsEndCrane && !isAreaClear) {
 			crane.IsEndCrane = false;
 			isAbleToMove = true;
-		} else if (crane.IsEndCrane && isAreaClear) {
+		} 
+		else if (crane.IsEndCrane && isAreaClear) {
 			open ();
 
 
-			//チュートリアルなら
+			//チュートリアルでないなら星追加
 			if (!gameManager.IsTutorial) {
+				int beforeStar = new int();
+				int currentStar = new int();
+				beforeStar = currentStar = 0;
+
+				//前のアイテム数と今回のアイテム数を数える
 				for (int i = 0; i < 3; i++) {
-					ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+					if (ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i]) {
+						beforeStar++;
+					}
+					if (itemManager.getItemOnStageIndex [i]) {
+						currentStar++;
+					}
+				}
+
+				//今回のアイテム数が前より多いもしくは同じだった場合上書き
+				if (beforeStar <= currentStar) {
+					for (int i = 0; i < 3; i++) {
+						ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+					}
 				}
 
 				int stageNum = ManagerSelectStage.TheCurrentlySelectStageID;
+
+				stageNum++;
 
 				ManagerSelectStage.LatestCaptureStage = "Stage" + string.Format ("{0:D2}", stageNum);
 

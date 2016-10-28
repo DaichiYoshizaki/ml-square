@@ -29,6 +29,6 @@ public class ManagerSelectStage : MonoBehaviour
 	{
 		GameSaveDataOperation.LoadGameSaveDataAll ();
 		SoundManager.Instance.PlayBGM (0);
+		ManagerSelectStage.LatestCaptureStage = "Stage07";
 	}
-
 }

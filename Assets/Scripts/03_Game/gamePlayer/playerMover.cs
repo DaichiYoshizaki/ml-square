@@ -134,8 +134,8 @@ public class playerMover : MonoBehaviour {
 				playerSprite.sprite = SpriteList [1];
 			}
 			if (col.g <= 1f) {
-				col.g+=0.1f;
-				col.b+=0.1f;
+				col.g+=0.1f * Time.deltaTime * 50f;
+				col.b+=0.1f * Time.deltaTime * 50f;
 			}
 			//左右でスプライトの
 		} else {
@@ -146,8 +146,8 @@ public class playerMover : MonoBehaviour {
 				playerSprite.sprite = SpriteList [3];
 			}
 			if (playerSprite.color.g >= 0f && isHighJump) {
-				col.g-=0.1f;
-				col.b-=0.1f;
+				col.g-=0.1f * Time.deltaTime * 50f;
+				col.b-=0.1f * Time.deltaTime * 50f;
 			}
 		}
 		playerSprite.color = col;
