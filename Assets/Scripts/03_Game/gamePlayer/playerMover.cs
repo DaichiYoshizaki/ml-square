@@ -127,12 +127,10 @@ public class playerMover : MonoBehaviour {
 		if (isAbleToMove) {
 			//右左でスプライトの変更
 			if (isFacingRight) {
-				//rb2d.velocity = Vector2.right * walkSpeed * Time.deltaTime;
-				transform.Translate(Vector2.right * walkSpeed);
+				transform.Translate(Vector2.right * walkSpeed * Time.deltaTime * 50);
 				playerSprite.sprite = SpriteList [0];
 			} else {
-				//rb2d.velocity = Vector2.right * -walkSpeed * Time.deltaTime;
-				transform.Translate(Vector2.right * -walkSpeed);
+				transform.Translate(Vector2.right * -walkSpeed * Time.deltaTime * 50);
 				playerSprite.sprite = SpriteList [1];
 			}
 			if (col.g <= 1f) {

@@ -30,6 +30,7 @@ public class Boss_left : Enemy {
 	private bool IsVerticalCollied(){
 		return Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.size.y * 0.5f - getCollider.offset.y), groundLayer);
 	}
+
 	public void NextPhase(int nextPhase) {
 		attackPhase = nextPhase;
 	}
@@ -127,7 +128,7 @@ public class Boss_left : Enemy {
 							changeFlag = false;
 						}
 						else if(waitTime < 0) {
-							transform.Translate(attackSpeed * speedGear);
+							transform.Translate(attackSpeed * speedGear * Time.deltaTime * 50);
 
 							// 中央〜初期位置の3倍の距離を移動したら方向転換
 							// ３倍進めば画面外だろ！という意図なので、ちゃんと画面の端に配置してください、画面内で処理が発生するとワープします
