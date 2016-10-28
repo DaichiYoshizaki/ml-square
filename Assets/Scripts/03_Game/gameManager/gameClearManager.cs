@@ -63,6 +63,9 @@ public class gameClearManager : MonoBehaviour {
 
 		gameCamera = GameObject.Find ("gameCamera");
 
+		gameCamera.transform.position = stages [gameManager.currentStageIndex].transform.position;
+		gameCamera.transform.position = new Vector3 (gameCamera.transform.position.x , gameCamera.transform.position.y, -1);
+
 		//awake for Canvas
 		clearPanelAwake ();
 		crane = craneObject.GetComponent<crane> ();
