@@ -119,12 +119,13 @@ public class Boss_right : Enemy {
 							changeFlag = false;
 						}
 						else if(waitTime < 0) {
-							transform.Translate(attackSpeed * speedGear);
+							transform.Translate(attackSpeed * speedGear * Time.deltaTime * 50);
 
 							if(IsVerticalCollied( ) ) {
 								isAbleToAttack = false;
 								waitTime = 1.0f;
 								changeFlag = true;
+								// SE再生
 								SoundManager.Instance.PlaySE(1);
 							}
 						}

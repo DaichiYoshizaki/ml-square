@@ -14,17 +14,15 @@ public class Srauqe_yellow : Enemy {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
-
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(jumpSpeed > 0) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.bounds.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -33,13 +31,13 @@ public class Srauqe_yellow : Enemy {
 	private bool IsHorizontalCollied(){
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
-			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		else {
-			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.bounds.size.x * 0.5f - getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.bounds.size.x * 0.5f - getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		return false;
@@ -72,33 +70,36 @@ public class Srauqe_yellow : Enemy {
 
 
 	// Use this for initialization
-	void Start () {
+	void Start( ) {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
-		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
 		ChkMovingWay( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+
 			if(!isAbleToJump) {
-				transform.Translate(new Vector3(moveSpeed, jumpSpeed, 0) );
-				jumpSpeed -= gravity;
+				transform.Translate(new Vector3(moveSpeed, jumpSpeed, 0) * Time.deltaTime * 50);
+				jumpSpeed -= gravity * Time.deltaTime * 50;
 				// 落下速度制限　めり込み処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
 
 				// 横方向に壁やフィールドにぶつかったら、横方向の移動量を0に
 				if(IsHorizontalCollied( ) ) {
-					while(IsHorizontalCollied( )) {
+					while(IsHorizontalCollied( ) ) {
 						transform.Translate(new Vector3(moveSpeed, 0.0f, 0.0f) * -0.2f);
 					}
 					moveSpeed = 0;
@@ -137,6 +138,10 @@ public class Srauqe_yellow : Enemy {
 					isAbleToJump = false;
 				}
 			}
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }
