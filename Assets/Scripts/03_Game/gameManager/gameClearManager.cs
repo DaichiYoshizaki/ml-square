@@ -18,6 +18,8 @@ public class gameClearManager : MonoBehaviour {
 	static public bool isAbleToOpen = true;
 
 
+	public bool both = false;
+
 	//for canvas
 	public GameObject gameClearCanvas;
 	static private Canvas canvas;
@@ -127,7 +129,7 @@ public class gameClearManager : MonoBehaviour {
 			isStageClear = false;
 		}
 
-		if (crane.IsEndCrane && ManagerSelectStage.TheCurrentlySelectStageID == 7) {
+		if (crane.IsEndCrane && ManagerSelectStage.TheCurrentlySelectStageID == 7 && both == false) {
 
 				// 使う前に setlabel を呼んどく。
 				DialogManager.Instance.SetLabel("Yes", "No", "Close");
@@ -137,8 +139,7 @@ public class gameClearManager : MonoBehaviour {
 					"クリアおめでとうございます、体験版はここまでになります。",
 				(bool result) => { if(result){ Fade.instance.FadeOut("00_Logo_00", 3f, 1f); } }
 				);
-
-
+			both = true;
 		}
 		else if (crane.IsEndCrane && !isAreaClear) {
 			crane.IsEndCrane = false;
