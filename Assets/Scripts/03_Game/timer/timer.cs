@@ -21,7 +21,7 @@ public class timer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		countTime = 15f;
-		if(ManagerSelectStage.TheCurrentlySelectStageID == 33)
+		if(ManagerSelectStage.TheCurrentlySelectStageID == 7)
 			countTime = 45f;
 		text = timerText.GetComponent<Text> ();
 		isTimeStop = false;
