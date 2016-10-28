@@ -120,7 +120,11 @@ public class gameClearManager : MonoBehaviour {
 				for (int i = 0; i < 3; i++) {
 					ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
 				}
-			
+
+				int stageNum = ManagerSelectStage.TheCurrentlySelectStageID;
+
+				ManagerSelectStage.LatestCaptureStage = "Stage" + string.Format ("{0:D2}", stageNum);
+
 				GameSaveDataOperation.SaveGameSaveDataAll ();
 
 				GameSaveDataOperation.LoadGameSaveDataAll ();
