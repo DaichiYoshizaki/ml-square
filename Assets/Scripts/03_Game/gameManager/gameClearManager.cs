@@ -63,6 +63,9 @@ public class gameClearManager : MonoBehaviour {
 
 		gameCamera = GameObject.Find ("gameCamera");
 
+		gameCamera.transform.position = stages [gameManager.currentStageIndex].transform.position;
+		gameCamera.transform.position = new Vector3 (gameCamera.transform.position.x , gameCamera.transform.position.y, -1);
+
 		//awake for Canvas
 		clearPanelAwake ();
 		crane = craneObject.GetComponent<crane> ();
@@ -113,13 +116,23 @@ public class gameClearManager : MonoBehaviour {
 			isAbleToMove = true;
 		} else if (crane.IsEndCrane && isAreaClear) {
 			open ();
-			for(int i = 0; i < 3; i++){
-				ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+
+
+			//チュートリアルなら
+			if (!gameManager.IsTutorial) {
+				for (int i = 0; i < 3; i++) {
+					ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+				}
+
+				int stageNum = ManagerSelectStage.TheCurrentlySelectStageID;
+
+				ManagerSelectStage.LatestCaptureStage = "Stage" + string.Format ("{0:D2}", stageNum);
+
+				GameSaveDataOperation.SaveGameSaveDataAll ();
+
+				GameSaveDataOperation.LoadGameSaveDataAll ();
+
 			}
-
-			GameSaveDataOperation.SaveGameSaveDataAll ();
-
-			GameSaveDataOperation.LoadGameSaveDataAll ();
 
 			crane.IsEndCrane = false;
 		}

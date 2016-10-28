@@ -11,18 +11,17 @@ public class Srauqe_tri : Enemy {
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	public LayerMask groundLayer; // 障害物レイヤ
 	public LayerMask wallLayer; // 画面端レイヤ
-	private float waitTime = 1; // 衝突時の待機時間
+	private float waitTime; // 衝突時の待機時間
 	private GameObject playerMover; // プレイヤー情報取得用
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(jumpSpeed > 0) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.bounds.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -56,9 +55,21 @@ public class Srauqe_tri : Enemy {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
-		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
+
+		// 開始前に地面に着地させる（そうしないと着地判定でwaitTimeが2秒に設定され、スタートから2秒の間はプレイヤーが近づいてもジャンプしなくなるため）
+		while(!IsVerticalCollied( ) ) {
+			jumpSpeed -= gravity;
+			transform.Translate(Vector2.up * jumpSpeed);
+		}
+
+		while(IsVerticalCollied( ) ) {
+			transform.Translate(Vector3.up * 0.02f);
+		}
+
+		isAbleToJump = true;
+		waitTime = 0;
 	}
 
 	void Update(){
@@ -68,9 +79,13 @@ public class Srauqe_tri : Enemy {
 	void FixedUpdate () {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+
 			if(!isAbleToJump) {
-				transform.Translate(Vector2.up * jumpSpeed);
-				jumpSpeed -= gravity;
+				transform.Translate(Vector2.up * jumpSpeed * Time.deltaTime * 50);
+				jumpSpeed -= gravity * Time.deltaTime * 50;
 				// 落下速度制限　めり込み処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
@@ -80,7 +95,7 @@ public class Srauqe_tri : Enemy {
 					if(jumpSpeed < 0) {
 						isAbleToJump = true;
 						jumpSpeed = 0;
-						waitTime = 2;
+						waitTime = 1;
 						// 地面めり込み対策
 						while(IsVerticalCollied( ) ) {
 							transform.Translate(Vector3.up * 0.02f);
@@ -100,6 +115,10 @@ public class Srauqe_tri : Enemy {
 					isAbleToJump = false;
 				}
 			}
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }

@@ -389,7 +389,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 12
+  m_Text: '
+
+'
 --- !u!222 &125116073
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2526,9 +2528,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c0f5eb86c5f4bbf91d0095a29b164d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugMode: 1
+  isDebugMode: 0
   stage: 0
   AreaSelectIndex: 1
+  isTutorial: 0
 --- !u!114 &885779274
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,15 +12,24 @@ public class gameManager : MonoBehaviour {
 	public int stage = 0;
 	public int AreaSelectIndex = 0;
 	static public int areaSelectIndex;
+	public bool isTutorial = false;
+	static public bool IsTutorial = false;
+	static public bool isStageRespawn = false;
+	static public int tweetStageIndex = 0;
+
 	void Awake(){
-		
+		IsTutorial = isTutorial;
+		if (isDebugMode) {
+			ManagerSelectStage.TheCurrentlySelectStageID = AreaSelectIndex;
+		}
 		loadStage.Load (ManagerSelectStage.TheCurrentlySelectStageID - 1);
+		currentStageIndex = tweetStageIndex;
 	}
 
 	// Use this for initialization
 	void Start () {
 
-		currentStageIndex = 0;
+
 
 		stages [0] = GameObject.Find ("PauseObjects/area/gameStage1");
 		stages [1] = GameObject.Find ("PauseObjects/area/gameStage2");
@@ -34,7 +43,7 @@ public class gameManager : MonoBehaviour {
 
 		gameCamera = GameObject.Find ("gameCamera");
 
-		player.transform.position = playerSpawn [0].transform.position;
+		player.transform.position = playerSpawn [currentStageIndex].transform.position;
 
 		SoundManager.Instance.PlayBGM (1);
 
