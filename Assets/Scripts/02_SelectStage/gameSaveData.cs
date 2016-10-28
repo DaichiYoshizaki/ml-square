@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 using UnityEditor;
-#endif
+#endif*/
 using System.Collections;
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 [InitializeOnLoad]
-#endif
+#endif*/
 public class gameSaveData : ScriptableObject
 {
 	// 最新攻略ステージ
@@ -19,7 +19,7 @@ public class gameSaveData : ScriptableObject
 	// SE
 	public int Se;
 }
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 public static class CreateSaveData
 {
 	public static  void Create(string stageName, bool[] ItemRcord, int BGM, int SE)
@@ -44,7 +44,7 @@ public static class CreateSaveData
 
 	}
 }
-#endif
+#endif*/
 // ゲームセーブデータの操作
 public static class GameSaveDataOperation
 {
