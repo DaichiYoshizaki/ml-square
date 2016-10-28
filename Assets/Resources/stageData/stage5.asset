@@ -9,96 +9,96 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b947f49da8dd44e183f3726dd695e4d, type: 3}
-  m_Name: stage13
+  m_Name: stage5
   m_EditorClassIdentifier: 
   entryEnemy:
-  - prefabName: enemy_trignale_green
+  - prefabName: enemy_trignale_pink
     stageIndex: 0
-    enemy_pos: {x: 0, y: -1.77, z: 100}
+    enemy_pos: {x: -0.86, y: -3.5, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: spawnPoint
     stageIndex: 0
-    enemy_pos: {x: -7.57, y: -3.58, z: 100}
+    enemy_pos: {x: -7.32, y: -3.58, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: field
+  - prefabName: enemy_trignale_pink
     stageIndex: 0
-    enemy_pos: {x: 0, y: -0.23, z: 100}
+    enemy_pos: {x: 4.6, y: -3.5, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 3.8500004, y: 1, z: 1}
+    enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: item
     stageIndex: 0
-    enemy_pos: {x: 0, y: 2.24, z: 100}
+    enemy_pos: {x: 6.77, y: -3.11, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: enemy_trignale_green
+  - prefabName: enemy_trignale_pink
     stageIndex: 1
-    enemy_pos: {x: 10.6, y: -1, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: field
-    stageIndex: 1
-    enemy_pos: {x: 22.41, y: -1, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 3.1040626, y: 1, z: 1}
-  - prefabName: spawnPoint
-    stageIndex: 1
-    enemy_pos: {x: 10.129999, y: -3.58, z: 100}
+    enemy_pos: {x: 19.199999, y: 0, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: field
     stageIndex: 1
-    enemy_pos: {x: 14.29, y: 1.88, z: 100}
+    enemy_pos: {x: 15.07, y: 0, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 1.4989065, y: 1, z: 1}
-  - prefabName: field
+    enemy_scl: {x: 1.8559237, y: 1, z: 1}
+  - prefabName: enemy_trignale_pink
     stageIndex: 1
-    enemy_pos: {x: 10.68, y: 0.67, z: 100}
+    enemy_pos: {x: 21.289999, y: 0, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: item
     stageIndex: 1
-    enemy_pos: {x: 10.719999, y: 3.02, z: 100}
+    enemy_pos: {x: 25.22, y: 0.15, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: enemy_trignale_green
+  - prefabName: enemy_riccle
     stageIndex: 1
-    enemy_pos: {x: 17.82, y: 3.73, z: 100}
+    enemy_pos: {x: 25.38, y: 4.25, z: 100}
+    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
+    enemy_scl: {x: 1, y: 1, z: 1}
+  - prefabName: enemy_atsr
+    stageIndex: 1
+    enemy_pos: {x: 18.66, y: -2.99, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: spawnPoint
-    stageIndex: 2
-    enemy_pos: {x: 27.71, y: -3.58, z: 100}
+    stageIndex: 1
+    enemy_pos: {x: 10.459999, y: -3.58, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: enemy_trignale_green
+  - prefabName: enemy_trignale_pink
     stageIndex: 2
-    enemy_pos: {x: 42.98, y: -4.01, z: 100}
+    enemy_pos: {x: 32.96, y: -3.62, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: field
+  - prefabName: enemy_trignale_pink
     stageIndex: 2
-    enemy_pos: {x: 35.64, y: -2.55, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 3.5831256, y: 1, z: 1}
-  - prefabName: field
-    stageIndex: 2
-    enemy_pos: {x: 28.97, y: 3.18, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 0.45131835, y: 2.946879, z: 1}
-  - prefabName: field
-    stageIndex: 2
-    enemy_pos: {x: 39.489998, y: 1.84, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 3.8125002, y: 1, z: 1}
-  - prefabName: item
-    stageIndex: 2
-    enemy_pos: {x: 39.13, y: 0, z: 100}
+    enemy_pos: {x: 38.47, y: -3.62, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: enemy_trignale
     stageIndex: 2
-    enemy_pos: {x: 27.63, y: 4.04, z: 100}
+    enemy_pos: {x: 27.73, y: 4.09, z: 100}
+    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
+    enemy_scl: {x: 1, y: 1, z: 1}
+  - prefabName: spawnPoint
+    stageIndex: 2
+    enemy_pos: {x: 28.279999, y: -3.58, z: 100}
+    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
+    enemy_scl: {x: 1, y: 1, z: 1}
+  - prefabName: field
+    stageIndex: 2
+    enemy_pos: {x: 33.79, y: 1.1, z: 100}
+    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
+    enemy_scl: {x: 3.8506317, y: 1, z: 1}
+  - prefabName: field
+    stageIndex: 2
+    enemy_pos: {x: 43.11, y: -0.98, z: 100}
+    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
+    enemy_scl: {x: 1, y: 1, z: 1}
+  - prefabName: item
+    stageIndex: 2
+    enemy_pos: {x: 43.15, y: -2.95, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
