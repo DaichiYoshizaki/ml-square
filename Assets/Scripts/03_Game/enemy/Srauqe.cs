@@ -11,16 +11,15 @@ public class Srauqe : Enemy {
 	public LayerMask groundLayer; // 障害物レイヤ
 	public LayerMask wallLayer; // 画面端レイヤ
 	private float waitTime = 1; // 衝突時の待機時間
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(jumpSpeed > 0) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.bounds.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -45,9 +44,8 @@ public class Srauqe : Enemy {
 	void Start () {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
-		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
 	}
 
 	void Update(){
@@ -57,9 +55,13 @@ public class Srauqe : Enemy {
 	void FixedUpdate () {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+			
 			if(!isAbleToJump) {
-				transform.Translate(Vector2.up * jumpSpeed);
-				jumpSpeed -= gravity;
+				transform.Translate(Vector2.up * jumpSpeed * Time.deltaTime * 50);
+				jumpSpeed -= gravity * Time.deltaTime * 50;
 				// 落下速度制限　めり込み処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
@@ -89,6 +91,10 @@ public class Srauqe : Enemy {
 					isAbleToJump = false;
 				}
 			}
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }

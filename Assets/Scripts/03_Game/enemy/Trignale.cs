@@ -17,16 +17,15 @@ public class Trignale : Enemy {
 	private GameObject playerMover; // プレイヤー情報取得用
 	private GameObject spawnPoint; // プレイヤー開始地点取得用
 	private Vector3 oldPosition; // 前回位置保存用
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.bounds.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -35,13 +34,13 @@ public class Trignale : Enemy {
 	private bool IsHorizontalCollied(){
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
-			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position + transform.right * (colSize.x * 0.5f + colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		else {
-			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), wallLayer) ||
-				Physics2D.Linecast(transform.position, transform.position - transform.right * (colSize.x * 0.5f - colOffset.x), groundLayer) )
+			if(Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.bounds.size.x * 0.5f - getCollider.offset.x), wallLayer) ||
+				Physics2D.Linecast(transform.position, transform.position - transform.right * (getCollider.bounds.size.x * 0.5f - getCollider.offset.x), groundLayer) )
 				return true;
 		}
 		return false;
@@ -100,9 +99,8 @@ public class Trignale : Enemy {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		playerMover = GameObject.Find("gamePlayer");
 		spawnPoint = transform.parent.transform.Find("spawnPoint").gameObject;
-		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
 		// プレイヤーの位置から初期の向きを設定
 		ChkMovingWay( );
 		IsSpawnRightside( );
@@ -115,6 +113,10 @@ public class Trignale : Enemy {
 	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+
 			// 縦移動時処理
 			if(isMovingVertical) {
 				// プレイヤーと軸が合うか障害物に衝突したら、上下移動をやめて横移動を開始する。
@@ -130,10 +132,10 @@ public class Trignale : Enemy {
 
 					// 移動処理
 					if(isMovingUp) {
-						transform.Translate(Vector2.up * moveSpeed);
+						transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * 50);
 					}
 					else {
-						transform.Translate(Vector2.down * moveSpeed);
+						transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * 50);
 					}
 				}
 			}
@@ -147,6 +149,8 @@ public class Trignale : Enemy {
 					changeFlag = true;
 					isAbleToMove = false;
 					oldPosition.x += 1; // 衝突後の待機状態が終わった時点でoldPosition == positionを満たしてしまうため、数値をずらしておく
+					// SE再生
+					SoundManager.Instance.PlaySE(3);
 				}
 
 				//もし移動ができるならば
@@ -156,10 +160,10 @@ public class Trignale : Enemy {
 
 					//左右移動
 					if(isFacingRight) {
-						transform.Translate(Vector2.right * moveSpeed);
+						transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * 50);
 					}
 					else {
-						transform.Translate(Vector2.left * moveSpeed);
+						transform.Translate(Vector2.left * moveSpeed * Time.deltaTime * 50);
 					}
 				}
 				// 衝突から0.5秒で振り返る
@@ -185,6 +189,10 @@ public class Trignale : Enemy {
 					waitTime -= Time.deltaTime;
 				}
 			}
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }

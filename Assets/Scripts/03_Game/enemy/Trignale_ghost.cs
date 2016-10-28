@@ -9,6 +9,7 @@ public class Trignale_ghost : Enemy {
 	private SpriteRenderer enemySprite; // スプライト情報取得用
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	private GameObject playerMover; // プレイヤー情報取得用
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// プレイヤーのいる方向取得
 	private void IsPlayerRightside( ) {
@@ -43,6 +44,8 @@ public class Trignale_ghost : Enemy {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
 	}
 
 	void Update(){
@@ -52,7 +55,11 @@ public class Trignale_ghost : Enemy {
 	void FixedUpdate () {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
-			transform.Translate(moveSpeed);
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+
+			transform.Translate(moveSpeed * Time.deltaTime * 50);
 
 			// 上下左右どの方向にプレイヤーいるか確認。他のやつの使い回しなので関数名は許して
 			ChkMovingWay( );
@@ -60,27 +67,31 @@ public class Trignale_ghost : Enemy {
 
 			// 上下移動
 			if(isMovingUp) {
-				moveSpeed.y += 0.0005f;
+				moveSpeed.y += 0.0005f * Time.deltaTime * 50;
 				if(moveSpeed.y >= 0.04f)
 					moveSpeed.y = 0.04f;
 			}
 			else {
-				moveSpeed.y -= 0.0005f;
+				moveSpeed.y -= 0.0005f * Time.deltaTime * 50;
 				if(moveSpeed.y <= -0.04f)
 					moveSpeed.y = -0.04f;
 			}
 
 			// 左右移動
 			if(isFacingRight) {
-				moveSpeed.x += 0.0005f;
+				moveSpeed.x += 0.0005f * Time.deltaTime * 50;
 				if(moveSpeed.x >= 0.04f)
 					moveSpeed.x = 0.04f;
 			}
 			else {
-				moveSpeed.x -= 0.0005f;
+				moveSpeed.x -= 0.0005f * Time.deltaTime * 50;
 				if(moveSpeed.x <= -0.04f)
 					moveSpeed.x = -0.04f;
 			}
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }

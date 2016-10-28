@@ -19,19 +19,14 @@ MonoBehaviour:
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: enemy_srauqe_tri
     stageIndex: 0
-    enemy_pos: {x: 3.61, y: -3.69, z: 100}
+    enemy_pos: {x: 0, y: -3.69, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: item
     stageIndex: 0
-    enemy_pos: {x: 7.5, y: 3.26, z: 100}
+    enemy_pos: {x: 7.5, y: -2.8, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
-  - prefabName: field
-    stageIndex: 0
-    enemy_pos: {x: 5.34, y: -2.79, z: 100}
-    enemy_rot: {x: -0, y: -0, z: -0, w: 1}
-    enemy_scl: {x: 0.52499926, y: 2.5914056, z: 1}
   - prefabName: spawnPoint
     stageIndex: 1
     enemy_pos: {x: 10.33, y: -3.58, z: 100}
@@ -39,7 +34,7 @@ MonoBehaviour:
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: enemy_srauqe_tri
     stageIndex: 1
-    enemy_pos: {x: 17.23, y: -3.69, z: 100}
+    enemy_pos: {x: 15.8, y: -3.69, z: 100}
     enemy_rot: {x: -0, y: -0, z: -0, w: 1}
     enemy_scl: {x: 1, y: 1, z: 1}
   - prefabName: field

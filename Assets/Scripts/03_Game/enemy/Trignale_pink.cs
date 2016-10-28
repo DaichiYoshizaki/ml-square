@@ -13,16 +13,15 @@ public class Trignale_pink : Enemy {
 	public LayerMask wallLayer; // 画面端レイヤ
 	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
-	private Vector3 colSize; // Colliderのサイズ取得用
-	private Vector2 colOffset; // Colliderのoffset取得用
+	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
 	private bool IsVerticalCollied(){
 		bool isVerCol;
 		if(isMovingUp) {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (colSize.y * 0.5f + colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
 		} else {
-			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (colSize.y * 0.5f - colOffset.y), groundLayer);
+			isVerCol = Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.bounds.size.y * 0.5f - getCollider.offset.y), groundLayer);
 		}
 		return isVerCol;
 	}
@@ -51,23 +50,26 @@ public class Trignale_pink : Enemy {
 
 
 	// Use this for initialization
-	void Start () {
+	void Start( ) {
 		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
 		playerMover = GameObject.Find("gamePlayer");
-		// Colliderのサイズ取得
-		colSize =  GetComponent<BoxCollider2D>( ).bounds.size;
-		colOffset = GetComponent<BoxCollider2D>( ).offset;
+		// Collider取得
+		getCollider =  GetComponent<BoxCollider2D>( );
 		// プレイヤーの位置から初期の向きを設定
 		IsPlayerRightside( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
+			// 当たり判定ON
+			if(!getCollider.enabled)
+				getCollider.enabled = true;
+
 			// 障害物か画面端に衝突したらしばらく動きを止める
 			// もしくは、移動処理を行っているのに前フレームから変化がなければ、移動を中断
 			if( (IsVerticalCollied( ) || oldPosition == transform.position || moveDistance >= 3.0f) && isAbleToMove) {
@@ -84,13 +86,17 @@ public class Trignale_pink : Enemy {
 
 			// 上下移動
 			if(isMovingUp) {
-				transform.Translate(Vector2.up * moveSpeed);
+				transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * 50);
 			}
 			else {
-				transform.Translate(Vector2.down * moveSpeed);
+				transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * 50);
 			}
 			// 移動距離加算
-			moveDistance += moveSpeed;
+			moveDistance += moveSpeed * Time.deltaTime * 50;
+		}
+		else if(getCollider.enabled) {
+			// 当たり判定OFF
+			getCollider.enabled = false;
 		}
 	}
 }
