@@ -3,8 +3,10 @@ using System.Collections;
 
 public class SceneChange_Title : MonoBehaviour {
 	// Use this for initialization
+	private GameObject obj;
 	void Start () {
 		SoundManager.Instance.PlayBGM (0);
+		obj = GameObject.Find ("player");
 	}
 	
 	// Update is called once per frame
@@ -14,6 +16,7 @@ public class SceneChange_Title : MonoBehaviour {
 			SoundManager.Instance.PlaySE (0);
 			SoundManager.Instance.StopBGM ();
 			Fade.instance.FadeOut("02_SelectStage", 3, 1);
+			obj.GetComponent<playerJump> ().IsAbleToJump = true;
 		}
 	}
 }
