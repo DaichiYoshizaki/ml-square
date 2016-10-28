@@ -14,6 +14,7 @@ public class ManagerSelectStage : MonoBehaviour
 
 	// アイテム取得履歴
 	public static bool[] ItemAcquisitionRecord =  new bool[ItemAcquisitionNumMax];
+	public static bool[] ItemAcquisitionRecord2 =  new bool[ItemAcquisitionNumMax];
 
 	// 最新攻略ステージ
 	public static string LatestCaptureStage = "Stage01";
