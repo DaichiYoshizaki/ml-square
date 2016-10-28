@@ -45,7 +45,12 @@ public class gameManager : MonoBehaviour {
 
 		player.transform.position = playerSpawn [currentStageIndex].transform.position;
 
+
 		SoundManager.Instance.PlayBGM (1);
+		if (ManagerSelectStage.TheCurrentlySelectStageID == 7) {
+			SoundManager.Instance.StopBGM ();
+			SoundManager.Instance.PlayBGM (2);
+		}
 
 		if (isDebugMode) {
 			player.transform.position = playerSpawn [areaSelectIndex].transform.position;
