@@ -50,6 +50,7 @@ public class s_TransitionStage : MonoBehaviour
 			{
 				// フェード
 				//Fade.instance.FadeOut ("03", 3,3 );
+				//s_TheLatestStageInTheCenter.GoToCenterScroll();
 				break;
 			}
 			// EnemyListの場合
