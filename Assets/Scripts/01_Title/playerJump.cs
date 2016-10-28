@@ -20,10 +20,11 @@ public class playerJump : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		playerJumpAbletime += 0.1f;
-		if (isAbleToJump && playerJumpAbletime > 2f){
+		if (isAbleToJump && playerJumpAbletime > 2f && playerJumpAbletime < 9999f){
 			rb2d.AddForce (Vector2.up * 500f);
 			SoundManager.Instance.PlaySE (1);
 			isAbleToJump = false;
+			playerJumpAbletime = 100000f;
 		}
 	}
 }

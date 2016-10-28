@@ -7,13 +7,31 @@ public class sheare : MonoBehaviour {
 
 	public void OnTweet()
 	{
-		StartCoroutine(Share());
+		//StartCoroutine(Share());
+		//gameManager.tweetStageIndex = gameManager.currentStageIndex;
+		#if UNITY_IPHONE
+		PopUp ();
+		#elif UNITY_ANDROID
+		PopUp ();
+		#else
+		gameManager.tweetStageIndex = gameManager.currentStageIndex;
+		#endif
 	}
 
 	public void OnClick(){
-		OnTweet ();
+		
 	}
+	void PopUp(){
+		// 使う前に setlabel を呼んどく。
+		DialogManager.Instance.SetLabel("Yes", "No", "Close");
+		//
+		// YES NO ダイアログ
+		DialogManager.Instance.ShowSubmitDialog(
+			"シェアしてくれてありがとう。リトライをするとステージの途中から復活できるよ！！",
+			(bool result) => { if(result){ gameManager.tweetStageIndex = gameManager.currentStageIndex; } }
+		);
 
+	}
 	IEnumerator Share()
 	{
 		// スクリーンショットをとる
