@@ -113,13 +113,19 @@ public class gameClearManager : MonoBehaviour {
 			isAbleToMove = true;
 		} else if (crane.IsEndCrane && isAreaClear) {
 			open ();
-			for(int i = 0; i < 3; i++){
-				ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+
+
+			//チュートリアルなら
+			if (!gameManager.IsTutorial) {
+				for (int i = 0; i < 3; i++) {
+					ManagerSelectStage.ItemAcquisitionRecord [(ManagerSelectStage.TheCurrentlySelectStageID - 1) * 3 + i] = itemManager.getItemOnStageIndex [i];
+				}
+			
+				GameSaveDataOperation.SaveGameSaveDataAll ();
+
+				GameSaveDataOperation.LoadGameSaveDataAll ();
+
 			}
-
-			GameSaveDataOperation.SaveGameSaveDataAll ();
-
-			GameSaveDataOperation.LoadGameSaveDataAll ();
 
 			crane.IsEndCrane = false;
 		}
