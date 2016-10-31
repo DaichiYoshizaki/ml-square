@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * トリゴナルクラス
+ * 
+ * ゆっくり上下に移動し、プレイヤーと軸が合ったら高速で突進する
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,7 +26,7 @@ public class Trignale : Enemy {
 	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
-	private bool IsVerticalCollied(){
+	private bool IsVerticalCollied( ) {
 		bool isVerCol;
 		if(isMovingUp) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
@@ -31,7 +37,7 @@ public class Trignale : Enemy {
 	}
 
 	// 横方向当たり判定
-	private bool IsHorizontalCollied(){
+	private bool IsHorizontalCollied( ) {
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
 			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
@@ -69,7 +75,7 @@ public class Trignale : Enemy {
 		}
 	}
 
-	// プレイヤーのいる方向を取得してそちらに振り向く
+	// 自分がいるステージのスタート地点を取得してそちらに振り向く
 	private void IsSpawnRightside( ) {
 		if(spawnPoint.transform.position.x > transform.position.x) {
 			isFacingRight = true;
@@ -82,22 +88,17 @@ public class Trignale : Enemy {
 	}
 
 	//方向変換
-	public void ChangeFace(){
+	public void ChangeFace( ) {
 		isFacingRight = !isFacingRight;
 	}
 		
-	//プロパティ--------------------------------
-	public float MoveSpeed{
-		private set{moveSpeed = value;}
-		get{return moveSpeed;}
-	}
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
 	void Start( ) {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
+		// プレイヤー情報取得
 		playerMover = GameObject.Find("gamePlayer");
+		// 自分のステージのプレイヤースタート地点取得
 		spawnPoint = transform.parent.transform.Find("spawnPoint").gameObject;
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
@@ -132,10 +133,10 @@ public class Trignale : Enemy {
 
 					// 移動処理
 					if(isMovingUp) {
-						transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * 50);
+						transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * timeAdjust);
 					}
 					else {
-						transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * 50);
+						transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * timeAdjust);
 					}
 				}
 			}
@@ -153,17 +154,17 @@ public class Trignale : Enemy {
 					SoundManager.Instance.PlaySE(3);
 				}
 
-				//もし移動ができるならば
+				// もし移動ができるならば
 				if(isAbleToMove) {
 					// 前回位置保存
 					oldPosition = transform.position;
 
 					//左右移動
 					if(isFacingRight) {
-						transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * 50);
+						transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * timeAdjust);
 					}
 					else {
-						transform.Translate(Vector2.left * moveSpeed * Time.deltaTime * 50);
+						transform.Translate(Vector2.left * moveSpeed * Time.deltaTime * timeAdjust);
 					}
 				}
 				// 衝突から0.5秒で振り返る

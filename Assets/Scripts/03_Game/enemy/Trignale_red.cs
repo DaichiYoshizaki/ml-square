@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * アカゴナルクラス
+ * 
+ * 上下に突進を繰り返す
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,7 +22,7 @@ public class Trignale_red : Enemy {
 	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
-	private bool IsVerticalCollied(){
+	private bool IsVerticalCollied( ) {
 		bool isVerCol;
 		if(isMovingUp) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
@@ -41,17 +47,11 @@ public class Trignale_red : Enemy {
 		isMovingUp = !isMovingUp;
 	}
 
-	//プロパティ--------------------------------
-	public float MoveSpeed{
-		private set{moveSpeed = value;}
-		get{return moveSpeed;}
-	}
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
-	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+	void Start( ) {
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
+		// プレイヤー情報取得
 		playerMover = GameObject.Find("gamePlayer");
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
@@ -59,11 +59,11 @@ public class Trignale_red : Enemy {
 		IsPlayerRightside( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 当たり判定ON
@@ -73,12 +73,11 @@ public class Trignale_red : Enemy {
 			// 障害物か画面端に衝突したらしばらく動きを止める
 			// もしくは、移動処理を行っているのに前フレームから変化がなければ、移動を中断
 			if( (IsVerticalCollied( ) || oldPosition == transform.position) && isAbleToMove) {
-				waitTime = 2.0f;
-				ChangeUpDown( );
-				isAbleToMove = false;
+				waitTime = 2.0f; // 待機時間設定
+				ChangeUpDown( ); // 移動方向反転
+				isAbleToMove = false; // 待機状態に移行
 				oldPosition.x += 1; // 衝突後の待機状態が終わった時点でoldPosition == positionを満たしてしまうため、数値をずらしておく
-				// SE再生
-				SoundManager.Instance.PlaySE(3);
+				SoundManager.Instance.PlaySE(3); // SE再生
 			}
 
 			//もし移動ができるならば
@@ -88,10 +87,10 @@ public class Trignale_red : Enemy {
 
 				// 上下移動
 				if(isMovingUp) {
-					transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * 50);
+					transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * timeAdjust);
 				}
 				else {
-					transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * 50);
+					transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * timeAdjust);
 				}
 			}
 			// 衝突から1秒で縦移動再開
