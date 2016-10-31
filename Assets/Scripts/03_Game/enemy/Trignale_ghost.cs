@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * トリゴーストクラス
+ * 
+ * ゆっくりとプレイヤーを追尾して追いかけ続ける。壁や床も貫通してゆく
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -33,33 +39,30 @@ public class Trignale_ghost : Enemy {
 		}
 	}
 
-	//プロパティ--------------------------------
-
-
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
-	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+	void Start( ) {
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
 		enemySprite.sprite = SpriteList[0];
+		// プレイヤー情報取得
 		playerMover = GameObject.Find("gamePlayer");
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 当たり判定ON
 			if(!getCollider.enabled)
 				getCollider.enabled = true;
 
-			transform.Translate(moveSpeed * Time.deltaTime * 50);
+			// 移動
+			transform.Translate(moveSpeed * Time.deltaTime * timeAdjust);
 
 			// 上下左右どの方向にプレイヤーいるか確認。他のやつの使い回しなので関数名は許して
 			ChkMovingWay( );
@@ -67,24 +70,24 @@ public class Trignale_ghost : Enemy {
 
 			// 上下移動
 			if(isMovingUp) {
-				moveSpeed.y += 0.0005f * Time.deltaTime * 50;
+				moveSpeed.y += 0.0005f * Time.deltaTime * timeAdjust;
 				if(moveSpeed.y >= 0.04f)
 					moveSpeed.y = 0.04f;
 			}
 			else {
-				moveSpeed.y -= 0.0005f * Time.deltaTime * 50;
+				moveSpeed.y -= 0.0005f * Time.deltaTime * timeAdjust;
 				if(moveSpeed.y <= -0.04f)
 					moveSpeed.y = -0.04f;
 			}
 
 			// 左右移動
 			if(isFacingRight) {
-				moveSpeed.x += 0.0005f * Time.deltaTime * 50;
+				moveSpeed.x += 0.0005f * Time.deltaTime * timeAdjust;
 				if(moveSpeed.x >= 0.04f)
 					moveSpeed.x = 0.04f;
 			}
 			else {
-				moveSpeed.x -= 0.0005f * Time.deltaTime * 50;
+				moveSpeed.x -= 0.0005f * Time.deltaTime * timeAdjust;
 				if(moveSpeed.x <= -0.04f)
 					moveSpeed.x = -0.04f;
 			}

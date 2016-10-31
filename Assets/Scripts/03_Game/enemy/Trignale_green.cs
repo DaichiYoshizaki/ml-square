@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * グリゴナルクラス
+ * 
+ * 左右に突進を繰り返す
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,7 +23,7 @@ public class Trignale_green : Enemy {
 	private BoxCollider2D getCollider; // Collider取得用
 
 	// 横方向当たり判定
-	private bool IsHorizontalCollied(){
+	private bool IsHorizontalCollied( ) {
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
 			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
@@ -45,21 +51,15 @@ public class Trignale_green : Enemy {
 	}
 
 	//方向変換
-	public void ChangeFace(){
+	public void ChangeFace( ) {
 		isFacingRight = !isFacingRight;
 	}
-
-	//プロパティ--------------------------------
-	public float MoveSpeed{
-		private set{moveSpeed = value;}
-		get{return moveSpeed;}
-	}
-	//プロパティ終わり----------------------------
 
 
 	// Use this for initialization
 	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
+		// プレイヤー情報取得
 		playerMover = GameObject.Find("gamePlayer");
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
@@ -71,7 +71,7 @@ public class Trignale_green : Enemy {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 当たり判定ON
@@ -97,10 +97,10 @@ public class Trignale_green : Enemy {
 
 				//左右移動
 				if(isFacingRight) {
-					transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * 50);
+					transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * timeAdjust);
 				}
 				else {
-					transform.Translate(Vector2.left * moveSpeed * Time.deltaTime * 50);
+					transform.Translate(Vector2.left * moveSpeed * Time.deltaTime * timeAdjust);
 				}
 			}
 			// 衝突から0.5秒で振り返る
