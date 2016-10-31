@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * ピンゴナルクラス
+ * 
+ * 上下に一定距離をゆっくり巡回する（こいつとしては寝てるだけ）
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,12 +17,11 @@ public class Trignale_pink : Enemy {
 	public List<Sprite> SpriteList; // スプライトリスト取得用
 	public LayerMask groundLayer; // 障害物レイヤ
 	public LayerMask wallLayer; // 画面端レイヤ
-	private GameObject playerMover; // プレイヤー情報取得用
 	private Vector3 oldPosition; // 前回位置保存用
 	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
-	private bool IsVerticalCollied(){
+	private bool IsVerticalCollied( ) {
 		bool isVerCol;
 		if(isMovingUp) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
@@ -26,37 +31,18 @@ public class Trignale_pink : Enemy {
 		return isVerCol;
 	}
 
-	// プレイヤーのいる方向取得
-	private void IsPlayerRightside( ) {
-		if(playerMover.transform.position.x > transform.position.x) {
-			enemySprite.sprite = SpriteList[0];
-		}
-		else {
-			enemySprite.sprite = SpriteList[1];
-		}
-	}
-
 	//方向変換
 	public void ChangeUpDown( ) {
 		isMovingUp = !isMovingUp;
 	}
 
-	//プロパティ--------------------------------
-	public float MoveSpeed{
-		private set{moveSpeed = value;}
-		get{return moveSpeed;}
-	}
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
 	void Start( ) {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
-		playerMover = GameObject.Find("gamePlayer");
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
+		enemySprite.sprite = SpriteList[0];
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
-		// プレイヤーの位置から初期の向きを設定
-		IsPlayerRightside( );
 	}
 
 	void Update( ) {
@@ -78,21 +64,18 @@ public class Trignale_pink : Enemy {
 				oldPosition.x += 1; // 衝突後の待機状態が終わった時点でoldPosition == positionを満たしてしまうため、数値をずらしておく
 			}
 
-			// 振り向き処理
-			IsPlayerRightside( );
-
 			// 前回位置保存
 			oldPosition = transform.position;
 
 			// 上下移動
 			if(isMovingUp) {
-				transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * 50);
+				transform.Translate(Vector2.up * moveSpeed * Time.deltaTime * timeAdjust);
 			}
 			else {
-				transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * 50);
+				transform.Translate(Vector2.down * moveSpeed * Time.deltaTime * timeAdjust);
 			}
 			// 移動距離加算
-			moveDistance += moveSpeed * Time.deltaTime * 50;
+			moveDistance += moveSpeed * Time.deltaTime * timeAdjust;
 		}
 		else if(getCollider.enabled) {
 			// 当たり判定OFF

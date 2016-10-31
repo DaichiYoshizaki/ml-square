@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * リックルクラス
+ * 
+ * 一定間隔で地面に落下して天井に戻っていくのを繰り返す
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,7 +23,7 @@ public class Riccle : Enemy {
 	private CircleCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
-	private bool IsVerticalCollied(){
+	private bool IsVerticalCollied( ) {
 		bool isVerCol;
 		if(isMovingUp) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f), groundLayer);
@@ -36,37 +42,26 @@ public class Riccle : Enemy {
 	}
 
 	//方向変換
-	public void ChangeFace(){
+	public void ChangeFace( ) {
 		isFacingRight = !isFacingRight;
 	}
 
-	//プロパティ--------------------------------
-	public float MoveUpSpeed{
-		set{moveUpSpeed = value;}
-		get{return moveUpSpeed;}
-	}
-
-	public float MoveDownSpeed{
-		set{moveDownSpeed = value;}
-		get{return moveDownSpeed;}
-	}
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
-	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+	void Start( ) {
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
 		enemySprite.sprite = SpriteList[0];
+		// プレイヤー情報取得
 		playerMover = GameObject.Find("gamePlayer");
 		// Collider取得、サイズの取得
 		getCollider = GetComponent<CircleCollider2D>( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 当たり判定ON
@@ -77,10 +72,10 @@ public class Riccle : Enemy {
 			if(isMovingUp) {
 				if(isAbleToMove) {
 					// 移動
-					transform.Translate(Vector2.up * moveUpSpeed);
+					transform.Translate(Vector2.up * moveUpSpeed * Time.deltaTime * timeAdjust);
 
 					// 天井到達で2秒待機、落下モードに切り替え
-					if(IsVerticalCollied( )) {
+					if(IsVerticalCollied( ) ) {
 						// めり込み対策
 						while(IsVerticalCollied( ) ) {
 							transform.Translate(Vector3.down * 0.02f);
@@ -103,10 +98,10 @@ public class Riccle : Enemy {
 			else {
 				if(isAbleToMove) {
 					// 移動
-					transform.Translate(Vector2.down * moveDownSpeed);
+					transform.Translate(Vector2.down * moveDownSpeed * Time.deltaTime * timeAdjust);
 
 					// 地面衝突で1秒待機、昇降モードに切り替え
-					if(IsVerticalCollied( )) {
+					if(IsVerticalCollied( ) ) {
 						// 地面めり込み対策
 						while(IsVerticalCollied( ) ) {
 							transform.Translate(Vector3.up * 0.02f);

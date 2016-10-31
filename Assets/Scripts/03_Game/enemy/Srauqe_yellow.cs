@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * イェアーククラス
+ * 
+ * プレイヤーに向かってジャンプ移動し続ける
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,7 +34,7 @@ public class Srauqe_yellow : Enemy {
 	}
 
 	// 横方向当たり判定
-	private bool IsHorizontalCollied(){
+	private bool IsHorizontalCollied( ) {
 		if (isFacingRight) {
 			// 障害物と画面端の両方で当たり判定
 			if(Physics2D.Linecast(transform.position, transform.position + transform.right * (getCollider.bounds.size.x * 0.5f + getCollider.offset.x), wallLayer) ||
@@ -44,7 +50,7 @@ public class Srauqe_yellow : Enemy {
 	}
 
 	// ジャンプ
-	public void Jump(float jumpPower){
+	public void Jump(float jumpPower) {
 		if (isAbleToJump) {
 			jumpSpeed = jumpPower;
 			isAbleToJump = false;
@@ -62,16 +68,11 @@ public class Srauqe_yellow : Enemy {
 			isFacingRight = true;
 		}
 	}
-
-	//プロパティ--------------------------------
-
-
-	//プロパティ終わり----------------------------
-
+		
 
 	// Use this for initialization
 	void Start( ) {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
 		enemySprite.sprite = SpriteList[0];
 		playerMover = GameObject.Find("gamePlayer");
 		// Collider取得
@@ -91,14 +92,17 @@ public class Srauqe_yellow : Enemy {
 				getCollider.enabled = true;
 
 			if(!isAbleToJump) {
-				transform.Translate(new Vector3(moveSpeed, jumpSpeed, 0) * Time.deltaTime * 50);
-				jumpSpeed -= gravity * Time.deltaTime * 50;
+				transform.Translate(new Vector3(moveSpeed, jumpSpeed, 0) * Time.deltaTime * timeAdjust);
+
+				// 移動量から重力加速度分を引く
+				jumpSpeed -= gravity * Time.deltaTime * timeAdjust;
 				// 落下速度制限　めり込み処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
 
 				// 横方向に壁やフィールドにぶつかったら、横方向の移動量を0に
 				if(IsHorizontalCollied( ) ) {
+					// めり込み対策
 					while(IsHorizontalCollied( ) ) {
 						transform.Translate(new Vector3(moveSpeed, 0.0f, 0.0f) * -0.2f);
 					}

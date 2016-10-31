@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * ボス右手クラス
+ * 
+ * 上からの叩きつけ攻撃を行う
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -31,18 +37,15 @@ public class Boss_right : Enemy {
 		return Physics2D.Linecast(transform.position, transform.position - transform.up * (getCollider.size.y * 0.5f - getCollider.offset.y), groundLayer);
 	}
 
+	// フェーズ移行
 	public void NextPhase(int nextPhase) {
 		attackPhase = nextPhase;
 	}
 
-	//プロパティ--------------------------------
-
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
 	void Start( ) {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
 
 		// 画像を透明に
 		setColor = enemySprite.color;
@@ -79,7 +82,7 @@ public class Boss_right : Enemy {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ( ) {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			switch(attackPhase) {
@@ -89,6 +92,7 @@ public class Boss_right : Enemy {
 					// 透明解除
 					if(setColor.a != 1) {
 						setColor.a += Time.deltaTime * 0.7f * speedGear;
+						// 透明状態が完全に溶けたら当たり判定をONに
 						if(setColor.a > 1) {
 							setColor.a = 1;
 							getCollider.enabled = true;
@@ -96,12 +100,14 @@ public class Boss_right : Enemy {
 						enemySprite.color = setColor;
 					}
 
+					// 攻撃の0.5秒前に画像を攻撃用に変更
 					if(changeFlag && waitTime <= 0.5f) {
 						// 画像を攻撃用に切り替え、それに伴い当たり判定も更新
 						enemySprite.sprite = SpriteList[1];
 						getCollider.size = attackCollider;
 						changeFlag = false;
 					}
+					// 待機時間0でフェーズ移行。攻撃開始
 					else if(waitTime < 0) {
 						isAbleToAttack = true;
 						attackPhase = 1;
@@ -119,8 +125,9 @@ public class Boss_right : Enemy {
 							changeFlag = false;
 						}
 						else if(waitTime < 0) {
-							transform.Translate(attackSpeed * speedGear * Time.deltaTime * 50);
+							transform.Translate(attackSpeed * speedGear * Time.deltaTime * timeAdjust);
 
+							// 地面に衝突したら次の落下開始地点へ移動する処理へ移行
 							if(IsVerticalCollied( ) ) {
 								isAbleToAttack = false;
 								waitTime = 1.0f;
@@ -137,6 +144,7 @@ public class Boss_right : Enemy {
 							getCollider.size = neutralCollider;
 							changeFlag = false;
 						}
+						// 待機時間0で次の落下開始位置へ移動する処理の開始
 						else if(waitTime < 0) {
 							moveFlag = true;
 							atkCnt++;
@@ -152,10 +160,10 @@ public class Boss_right : Enemy {
 						}
 					}
 					else {
-						// moveSpeedが移動速度でなく総移動距離になっているので、deltaTimeをかける
+						// moveSpeedが移動速度でなく総移動距離になっているので、deltaTimeを使って１秒かけて落下開始地点に移動する
 						transform.Translate(moveSpeed * Time.deltaTime);
-						elapseTime += Time.deltaTime;
-						// 1秒かけて移動をほぼ完了したら目的地に強制移動（行き過ぎ防止策）して、各種設定
+						elapseTime += Time.deltaTime; // 経過時間保存
+						// 移動をほぼ完了したら目的地に強制移動（行き過ぎ防止策）して、各種設定
 						if(elapseTime > 1.0f) {
 							transform.position = nextDistination;
 							isAbleToAttack = true;
@@ -172,35 +180,39 @@ public class Boss_right : Enemy {
 					// 攻撃後透過して消える処理
 					if(setColor.a != 0) {
 						setColor.a -= Time.deltaTime * 0.7f;
-						// 透過が割ったら判定を消す
+						// 完全に透過したら当たり判定を消す
 						if(setColor.a < 0) {
 							setColor.a = 0;
 							getCollider.enabled = false;
 							// 初期位置に戻す
 							transform.position = startPos;
 
-							if(speedGear < 1.1f) {
-								if(getLeft != null) {
-									getLeft.GetComponent<Boss_left>( ).NextPhase(1);
-								}
-								else {
-									attackPhase = 3;
-								}
-								if(endFlag)
-									enemyPauseFlag = true;
-							}
-							else {
-								if(getLeft != null) {
-									getLeft.GetComponent<Boss_left>( ).NextPhase(3);
-								}
-								else {
-									attackPhase = 4;
-								}
-							}
-
-							// 終了フラグがONならばポーズ
-							if(endFlag)
+							// 終了フラグがONならばポーズ、でなければ右手へフェーズ変更の命令
+							if(endFlag) {
 								enemyPauseFlag = true;
+							}
+							// 現在のギア数に応じて左手のフェーズ呼び出し。左手の方にも書いたが要改善
+							// ボスは左右の手を同時に配置する前提だが、念のために左手が配置してない場合の例外処理も追加
+							else {
+								if(speedGear < 1.1f) {
+									if(getLeft != null) {
+										getLeft.GetComponent<Boss_left>( ).NextPhase(1);
+									}
+									else {
+										attackPhase = 3;
+									}
+									if(endFlag)
+										enemyPauseFlag = true;
+								}
+								else {
+									if(getLeft != null) {
+										getLeft.GetComponent<Boss_left>( ).NextPhase(3);
+									}
+									else {
+										attackPhase = 4;
+									}
+								}
+							}
 						}
 						enemySprite.color = setColor;
 					}
@@ -222,17 +234,6 @@ public class Boss_right : Enemy {
 					atkCnt = 0;
 					getLeft.GetComponent<Boss_left>( ).NextPhase(4);
 					endFlag = true;
-
-					break;
-				}
-			case 99: {
-					// 未完成時用の無限ループ（第１フェーズに戻る）
-					attackPhase = 1;
-					atkCnt = 0;
-					nextDistination = startPos;
-					moveSpeed = new Vector3(nextDistination.x - transform.position.x, nextDistination.y - transform.position.y, 0.0f);
-					isAbleToAttack = false;
-					moveFlag = true;
 
 					break;
 				}

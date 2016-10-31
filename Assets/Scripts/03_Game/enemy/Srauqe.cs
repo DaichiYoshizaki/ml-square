@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*******************************************************************************************************************************************************
+ * スラーククラス
+ * 
+ * 一定間隔でジャンプする
+*******************************************************************************************************************************************************/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,7 +20,7 @@ public class Srauqe : Enemy {
 	private BoxCollider2D getCollider; // Collider取得用
 
 	// 縦方向当たり判定
-	private bool IsVerticalCollied(){
+	private bool IsVerticalCollied( ) {
 		bool isVerCol;
 		if(jumpSpeed > 0) {
 			isVerCol = Physics2D.Linecast(transform.position, transform.position + transform.up * (getCollider.bounds.size.y * 0.5f + getCollider.offset.y), groundLayer);
@@ -25,7 +31,7 @@ public class Srauqe : Enemy {
 	}
 
 	// ジャンプ
-	public void Jump(float jumpPower){
+	public void Jump(float jumpPower) {
 		if (isAbleToJump) {
 			jumpSpeed = jumpPower;
 			isAbleToJump = false;
@@ -34,25 +40,20 @@ public class Srauqe : Enemy {
 		}
 	}
 
-	//プロパティ--------------------------------
-
-
-	//プロパティ終わり----------------------------
-
 
 	// Use this for initialization
-	void Start () {
-		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>();
+	void Start( ) {
+		enemySprite = gameObject.transform.FindChild ("enemySprite").GetComponent<SpriteRenderer>( );
 		enemySprite.sprite = SpriteList[0];
 		// Collider取得
 		getCollider =  GetComponent<BoxCollider2D>( );
 	}
 
-	void Update(){
+	void Update( ) {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate( ) {
 		// ポーズ状態では更新しない
 		if(!enemyPauseFlag) {
 			// 当たり判定ON
@@ -60,14 +61,18 @@ public class Srauqe : Enemy {
 				getCollider.enabled = true;
 			
 			if(!isAbleToJump) {
-				transform.Translate(Vector2.up * jumpSpeed * Time.deltaTime * 50);
-				jumpSpeed -= gravity * Time.deltaTime * 50;
-				// 落下速度制限　めり込み処理が重くなりすぎないように
+				// 移動
+				transform.Translate(Vector2.up * jumpSpeed * Time.deltaTime * timeAdjust);
+
+				// 移動量から重力加速度分を引く
+				jumpSpeed -= gravity * Time.deltaTime * timeAdjust;
+				// 落下速度制限　めり込み対策処理が重くなりすぎないように
 				if(jumpSpeed < -1)
 					jumpSpeed = -1;
-				
+
 				// 着地したら2秒待機
 				if(IsVerticalCollied( ) ) {
+					// 移動速度の符号で上昇中or下降中を判断
 					if(jumpSpeed < 0) {
 						isAbleToJump = true;
 						jumpSpeed = 0;

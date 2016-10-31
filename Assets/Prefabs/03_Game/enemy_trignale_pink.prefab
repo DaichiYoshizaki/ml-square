@@ -98,7 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpriteList:
   - {fileID: 21300000, guid: 12bf41d3a9c904feab31a23e0310af9a, type: 3}
-  - {fileID: 21300000, guid: 3138ee848949445a49938e9fe007b7e9, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
