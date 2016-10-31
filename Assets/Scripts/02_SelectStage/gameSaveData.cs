@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 using UnityEditor;
-#endif
+#endif*/
 using System.Collections;
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 [InitializeOnLoad]
-#endif
+#endif*/
 public class gameSaveData : ScriptableObject
 {
 	// 最新攻略ステージ
@@ -19,7 +19,7 @@ public class gameSaveData : ScriptableObject
 	// SE
 	public int Se;
 }
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 public static class CreateSaveData
 {
 	public static  void Create(string stageName, bool[] ItemRcord, int BGM, int SE)
@@ -44,14 +44,14 @@ public static class CreateSaveData
 
 	}
 }
-#endif
+#endif*/
 // ゲームセーブデータの操作
 public static class GameSaveDataOperation
 {
 	
 	public static gameSaveData SaveData;
 
-	// 全てのデータを取得
+	// セーブデータを全て取得処理
 	public static void LoadGameSaveDataAll()
 	{
 		SaveData = Resources.Load<gameSaveData> ("SaveData");
@@ -70,7 +70,7 @@ public static class GameSaveDataOperation
 		// SE
 		ManagerSelectStage.Se = SaveData.Se;
 	}
-	// 全てのセーブデータを更新
+	// セーブデータの全て更新処理
 	public static void SaveGameSaveDataAll()
 	{
 		SaveData = Resources.Load<gameSaveData> ("SaveData");
@@ -86,7 +86,5 @@ public static class GameSaveDataOperation
 		// SE
 		SaveData.Se = ManagerSelectStage.Se;
 	}
-
-	// 
 }
 

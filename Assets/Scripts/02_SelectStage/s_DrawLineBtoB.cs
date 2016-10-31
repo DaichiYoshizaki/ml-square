@@ -2,11 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
+// 02_SelectStageのStageとStageを繋げる線の生成
 public class s_DrawLineBtoB : MonoBehaviour
 {
 	string StartPointStage; //始点ステージ
 	string NextStage;// 次ステージ
-
 
 	// Use this for initialization
 	void Start () 
@@ -14,8 +14,8 @@ public class s_DrawLineBtoB : MonoBehaviour
 		for (int i = 1; i < 34; i++) 
 		{
 			// 
-			StartPointStage = "Stage";
-			NextStage = "Stage";
+			StartPointStage = "Stage";	// 起点のステージ
+			NextStage = "Stage";		// 次のステージ
 
 			// Stage1~9
 			if (i < 10) 
@@ -66,21 +66,6 @@ public class s_DrawLineBtoB : MonoBehaviour
 			test.transform.position = StartObject.transform.position + pos;
 
 		}
-		/*GameObject test = new GameObject ();
-		test.AddComponent <RectTransform>();
-		test.transform.parent = transform;
-		test.AddComponent<Image> ();
-		RectTransform rt = new RectTransform ();
-		rt = test.GetComponent<RectTransform> ();
-		//Image img = GetComponent<Image> ();
-		rt.sizeDelta = new Vector2 (rt.rect.width, 200.0f);*/
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		//transform.position = transform.parent.position;
-	
-		//Debug.Log (transform.parent.name);
-	}
+	}// Start() End
+
 }

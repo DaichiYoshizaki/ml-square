@@ -22,7 +22,7 @@ public class s_TheLatestStageInTheCenter
 			pos = new Vector3( 0, 
 				centerPos.y, centerPos.z);
 		}
-		Debug.Log (button.transform.localPosition.x);
+		//Debug.Log (button.transform.localPosition.x);
 		center.GetComponent<RectTransform> ().position = pos;
 	}
 
