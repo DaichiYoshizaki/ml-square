@@ -2,14 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class s_ButtonFunctionOnOff : MonoBehaviour {
-
-
+// 攻略した最新ステージ以上のステージを選択できないようにする。
+public class s_ButtonFunctionOnOff : MonoBehaviour 
+{
 	string StageName; //ステージ
 
 	// Update is called once per frame
 	void Update ()
 	{
+		// ステージの数分繰り返す
 		for (int i = 1; i < 35; i++) 
 		{
 			// 
@@ -25,18 +26,21 @@ public class s_ButtonFunctionOnOff : MonoBehaviour {
 			{
 				StageName = StageName + i.ToString ();
 			}
-			int ID = int.Parse( ManagerSelectStage.LatestCaptureStage.Substring (5, 2) );
-			if (i <= ID) 
-			{
-				Button button = GameObject.Find (StageName).GetComponent<Button> ();
-				button.interactable = true;
-			} 
-			else 
-			{
-				Button button = GameObject.Find (StageName).GetComponent<Button> ();
-				button.interactable = false;
-			}
 
+			// スデージ番号をintに変換
+			int ID = int.Parse( ManagerSelectStage.LatestCaptureStage.Substring (5, 2) );
+
+			// ステージの選択できるかどうか切り替え
+				if (i <= ID) // 攻略した最新ステージ以下の場合
+				{
+					Button button = GameObject.Find (StageName).GetComponent<Button> ();
+					button.interactable = true;
+				} 
+				else // 攻略した最新ステージ以上の場合
+				{
+					Button button = GameObject.Find (StageName).GetComponent<Button> ();
+					button.interactable = false;
+				}
 		}
 	
 	}// update end

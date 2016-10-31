@@ -51,7 +51,7 @@ public static class GameSaveDataOperation
 	
 	public static gameSaveData SaveData;
 
-	// 全てのデータを取得
+	// セーブデータを全て取得処理
 	public static void LoadGameSaveDataAll()
 	{
 		SaveData = Resources.Load<gameSaveData> ("SaveData");
@@ -70,7 +70,7 @@ public static class GameSaveDataOperation
 		// SE
 		ManagerSelectStage.Se = SaveData.Se;
 	}
-	// 全てのセーブデータを更新
+	// セーブデータの全て更新処理
 	public static void SaveGameSaveDataAll()
 	{
 		SaveData = Resources.Load<gameSaveData> ("SaveData");
@@ -86,7 +86,5 @@ public static class GameSaveDataOperation
 		// SE
 		SaveData.Se = ManagerSelectStage.Se;
 	}
-
-	// 
 }
 

@@ -8140,7 +8140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aef0b6c5ad5a4e958afd46418d55e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starPrefab: {fileID: 0}
+  starPrefab: {fileID: 1000010547321938, guid: 6f6514b0f4450471f87ed414b0512f01, type: 2}
 --- !u!1 &1913426130
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,24 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// 02_SelectStageで選択したボタンを分析して転送する
 public class s_TransitionStage : MonoBehaviour 
 {
-
-	// Use this for initialization
-	void Start () 
-	{
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-
-	}
-
 	// ボタンを押した時の処理
 	public void onClick( string Name )
 	{
-		
 		string CheckString;	// 文字列比較用
 		const int STRING_NUM_MIN = 5;	// チェックする文字列の最小値
 		const int STRING_NUM_MAX = 10;  // チェックする文字列の最大値
